@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/GestAca.iml" filepath="$PROJECT_DIR$/.idea/modules/GestAca.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GestAca_main.iml" filepath="$PROJECT_DIR$/.idea/modules/GestAca_main.iml" group="GestAca" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GestAca_test.iml" filepath="$PROJECT_DIR$/.idea/modules/GestAca_test.iml" group="GestAca" />
     </modules>
   </component>
 </project>

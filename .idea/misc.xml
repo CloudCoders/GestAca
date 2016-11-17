@@ -38,28 +38,6 @@
       <property name="caretWidth" class="java.lang.Integer" />
     </properties>
   </component>
-  <component name="GradleLocalSettings">
-    <option name="modificationStamps">
-      <map>
-        <entry key="$PROJECT_DIR$/../../Algorithms" value="5861929988000" />
-        <entry key="$PROJECT_DIR$/../../Algorithms/java" value="2924365474000" />
-        <entry key="$PROJECT_DIR$/../Katas" value="2930986154000" />
-        <entry key="$PROJECT_DIR$/../../kotlin/Kata-Contacts" value="1459246529000" />
-        <entry key="$PROJECT_DIR$/../../kotlin/Kotlin-Adventures" value="1459246529000" />
-        <entry key="$USER_HOME$/Meetizer/charles" value="2919970286000" />
-      </map>
-    </option>
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
-  </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="Bundled (Maven 3)" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />

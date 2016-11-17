@@ -18,5 +18,9 @@
         <processorPath useClasspath="true" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="GestAca_main" target="1.5" />
+      <module name="GestAca_test" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
