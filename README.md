@@ -1,5 +1,4 @@
 # GestAca
-Case of study 
+Case of study of why Antonio is so cute.
 
 
-Llorens es gay por llegar tarde.
