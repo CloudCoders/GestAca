@@ -94,4 +94,17 @@ public class CommandLine implements View {
         System.out.print("\tZip: " + student.getZip());
         System.out.print("\tIBAN: " + student.getIban());
     }
+
+    public Course askCreateCourse() {
+        System.out.println("\tNombre: ");
+        String name = scanner.nextLine();
+        System.out.println("\tDescripcion: ");
+        String description = scanner.nextLine();
+        Course course = new Course(description,name,0);
+        return course;
+    }
+
+    public void showCurseCreated() {
+        System.out.println("Curso creado.");
+    }
 }
