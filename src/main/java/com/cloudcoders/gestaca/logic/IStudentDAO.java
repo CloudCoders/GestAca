@@ -6,18 +6,16 @@ import java.util.List;
 
 public interface IStudentDAO {
 
-  Student getStudentBy(String dni);
+  Student get(String dni);
 
-  List<Student> addAllStudents(List<Student> students);
+  List<Student> addAll(List<Student> students);
 
-  Student addStudentBy(Student student);
+  Student add(Student student);
 
-  Student removeStudentBy(Student student);
+  Student remove(Student student);
 
-  Student removeStudentBy(String dni);
+  List<Student> getAll();
 
-  List<Student> getAllStudents();
-
-  List<Student> removeAllStudents();
+  List<Student> removeAll();
 
 }
