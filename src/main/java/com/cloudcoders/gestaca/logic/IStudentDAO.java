@@ -8,7 +8,7 @@ public interface IStudentDAO {
 
   Student get(String dni);
 
-  Student add(Student student);
+  void add(Student student);
 
   Student remove(Student student);
 
