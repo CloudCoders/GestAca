@@ -1,4 +1,4 @@
-package model;
+package com.cloudcoders.gestaca.model;
 
 
 public abstract class Person {
