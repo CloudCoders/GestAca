@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +40,8 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
       jsonArray = parser.readFile("TaughtCourse.json");
     } catch (IOException e) {
       e.printStackTrace();
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
     }
 
     jsonArray.put(aux);
@@ -46,6 +49,8 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
       parser.writeFile("TaughtCourse.json", jsonArray);
       return true;
     } catch (IOException e) {
+      return false;
+    } catch (URISyntaxException e) {
       return false;
     }
   }
@@ -68,6 +73,8 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
     try {
       jsonArray = parser.readFile("TaughtCourse.json");
     } catch (IOException e) {
+      e.printStackTrace();
+    } catch (URISyntaxException e) {
       e.printStackTrace();
     }
 
