@@ -49,27 +49,14 @@ public class EnrollmentDAOImpl implements IEnrollmentDAO {
       int id = (int) jsonObject.get("id");
       TaughtCourse taughtCourse = (TaughtCourse) jsonObject.get("taughtCourse");
       Student student = (Student) jsonObject.get("student");
-      List<Absence> absences = (List<Absence>) jsonObject.get("absences");
 
-      Enrollment aux;
-      if(absences != null) {
-        aux = new Enrollment(
-            cancellationDate,
-            enrollmentDate,
-            uniquePayment,
-            id,
-            absences,
-            taughtCourse,
-            student);
-      } else {
-        aux = new Enrollment(
+      Enrollment aux = new Enrollment(
             cancellationDate,
             enrollmentDate,
             uniquePayment,
             id,
             taughtCourse,
             student);
-      }
 
       enrollments.add(aux);
     }
