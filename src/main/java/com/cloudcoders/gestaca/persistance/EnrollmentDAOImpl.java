@@ -83,7 +83,8 @@ public class EnrollmentDAOImpl implements IEnrollmentDAO {
     aux.put("cancellationDate", enrollment.getCancellationDate());
     aux.put("enrollmentDate", enrollment.getEnrollemntDate());
     aux.put("uniquePayment", enrollment.isUniquePayment());
-    aux.put("id", enrollment.getId());
+    int newId = (int) System.currentTimeMillis();
+    aux.put("id", newId);
     aux.put("taughtCourse", enrollment.getTaughtCourse());
     aux.put("student", enrollment.getStudent());
     aux.put("absences", enrollment.getAbsences());

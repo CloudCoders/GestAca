@@ -29,7 +29,8 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
     aux.put("totalPrice", taughtCourse.getTotalPrice());
     aux.put("teachingday", taughtCourse.getTeachingday());
     aux.put("endDate", taughtCourse.getEndDate());
-    aux.put("id", taughtCourse.getId());
+    int newId = (int) System.currentTimeMillis();
+    aux.put("id", newId);
     aux.put("office", taughtCourse.getOffice());
     aux.put("teacher", taughtCourse.getTeacher());
     aux.put("course", taughtCourse.getCourse());
