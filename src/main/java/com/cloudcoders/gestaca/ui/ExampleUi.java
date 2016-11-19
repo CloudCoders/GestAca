@@ -1,40 +1,41 @@
 package com.cloudcoders.gestaca.ui;
 
+import com.cloudcoders.gestaca.model.Course;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ExampleUi {
 
     public static void main(String... args) {
         Scanner scanner = new Scanner(System.in);
+        CommandLine cmd = new CommandLine();
         String command;
+
+        List<Course> courseList = new ArrayList<Course>();
+        courseList.add(new Course("fdafda", "Programacion en Android", 1));
+        courseList.add(new Course("fdafda", "Programacion en Java", 2));
+        courseList.add(new Course("fdafda", "Diagramas de clases en UML", 3));
+        courseList.add(new Course("fdafda", "Experto de NodeJS (Patrocinado por Goterris)", 4));
+
         do {
             System.out.print("> ");
             command = scanner.nextLine();
             if (command.equals("inscribir alumno")) {
-                listarCursos();
-                System.out.print("Curso: ");
-                String curso = scanner.nextLine();
-
-                System.out.print("DNI alumno: ");
-                String dni = scanner.nextLine();
-
+                cmd.showCourses(courseList);
+                cmd.askCourse();
+                cmd.askDNI();
                 if (isAlumno()) {
                     if (isInscrito()) {
-                        System.out.println("ERROR: Alumno ya escrito en el curso.");
+                        cmd.showStudentFoundAndEnrolled();
                     } else {
-                        System.out.println("Alumno inscrito en el curso.");
+                        cmd.showStudentFoundAndNotEnrolled();
                     }
                 } else {
-                    System.out.println("Alumno no encontrado, introduce sus datos.");
-                    System.out.print("\tNombre: ");
-                    String alumno = scanner.nextLine();
-                    System.out.print("\tDireccion: ");
-                    String direccion = scanner.nextLine();
-                    System.out.print("\tZip: ");
-                    String zip = scanner.nextLine();
-                    System.out.print("\tIBAN: ");
-                    String iban = scanner.nextLine();
-                    System.out.println("Alumno matriculado y inscrito en el curso.");
+                    cmd.showStudentNotFound();
+                    cmd.askStudent();
+                    cmd.showStudentEnrolled();
                 }
             }
         } while (!command.equals("exit"));
@@ -46,12 +47,5 @@ public class ExampleUi {
 
     public static boolean isInscrito() {
         return false;
-    }
-
-    public static void listarCursos() {
-        System.out.println("\t1.- Programacion en Android");
-        System.out.println("\t2.- Programacion en Java");
-        System.out.println("\t3.- Diagramas de clases en UML");
-        System.out.println("\t4.- Experto de NodeJS (Patrocinado por Goterris)");
     }
 }
