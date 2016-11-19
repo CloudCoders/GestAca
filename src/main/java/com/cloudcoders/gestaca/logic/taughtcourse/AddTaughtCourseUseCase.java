@@ -9,7 +9,7 @@ public class AddTaughtCourseUseCase {
   public AddTaughtCourseUseCase(ITaughtCourseDAO iTaughtCourseDAO) {
     this.iTaughtCourseDAO = iTaughtCourseDAO;
   }
-  public void add(TaughtCourse taughtCourse){
+  public void add(TaughtCourse taughtCourse) {
     iTaughtCourseDAO.add(taughtCourse);
   }
 }
