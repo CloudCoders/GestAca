@@ -3,14 +3,14 @@ package com.cloudcoders.gestaca.logic.student;
 import com.cloudcoders.gestaca.logic.IStudentDAO;
 import com.cloudcoders.gestaca.model.Student;
 
-public class RemoveStudentUseCase {
+public class AddStudent {
   IStudentDAO iStudentDAO;
 
-  public RemoveStudentUseCase(IStudentDAO iStudentDAO) {
+  public AddStudent(IStudentDAO iStudentDAO) {
     this.iStudentDAO = iStudentDAO;
   }
 
-  public Student remove(Student student) {
-    return iStudentDAO.remove(student);
+  public void add(Student student) {
+      iStudentDAO.add(student);
   }
 }
