@@ -4,10 +4,10 @@ import com.cloudcoders.gestaca.model.TaughtCourse;
 import com.sun.tools.javac.util.List;
 
 public interface ITaughtCourseDAO {
-  boolean addTaughtCourse(TaughtCourse taughtCourse);
-  boolean addAllTaughtCourses(List<TaughtCourse> taughtCourses);
-  TaughtCourse removeTaughtCourseBy(int id);
-  List<TaughtCourse> removeAllTaughtCourses();
-  TaughtCourse getTaughtCourseBy(int id);
-  List<TaughtCourse> getAllTaughtCourses();
+  boolean add(TaughtCourse taughtCourse);
+  boolean addAll(List<TaughtCourse> taughtCourses);
+  TaughtCourse remove(int id);
+  List<TaughtCourse> removeAll();
+  TaughtCourse get(int id);
+  List<TaughtCourse> getAll();
 }

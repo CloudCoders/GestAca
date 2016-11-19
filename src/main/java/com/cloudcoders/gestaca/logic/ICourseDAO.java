@@ -7,9 +7,8 @@ import com.sun.tools.javac.util.List;
 public interface ICourseDAO {
   Course getCourseBy(String name);
   List<Course> getAllCourses();
-  boolean addCourse(Course course);
-  boolean addAllCourses(List<Course> courses);
-  Course removeCourseBy(String name);
-  Course removeCourseBy(Course course);
-  List<Course> removeAllCourses();
+  boolean add(Course course);
+  boolean addAll(List<Course> courses);
+  Course remove(Course course);
+  List<Course> removeAll();
 }
