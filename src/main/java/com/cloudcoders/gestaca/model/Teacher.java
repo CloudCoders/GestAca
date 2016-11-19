@@ -34,15 +34,8 @@ public class Teacher extends Person {
     return ssn;
   }
 
-  public void setSsn(String ssn) {
-    this.ssn = ssn;
-  }
-
   public List<TaughtCourse> getTaughtCourses() {
     return taughtCourses;
   }
 
-  public void setTaughtCourses(List<TaughtCourse> taughtCourses) {
-    this.taughtCourses = taughtCourses;
-  }
 }
