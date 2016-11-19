@@ -8,7 +8,7 @@ public class GetAllTaughtCoursesUseCase {
   public GetAllTaughtCoursesUseCase(ITaughtCourseDAO iTaughtCourseDAO) {
     this.iTaughtCourseDAO = iTaughtCourseDAO;
   }
-  public void getAll(){
+  public void getAll() {
     iTaughtCourseDAO.getAll();
   }
 }

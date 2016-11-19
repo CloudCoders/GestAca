@@ -9,11 +9,11 @@ public class GetAllStudentsUseCase {
 
   private IStudentDAO iStudentDAO;
 
-  public GetAllStudentsUseCase(IStudentDAO iStudentDAO){
+  public GetAllStudentsUseCase(IStudentDAO iStudentDAO) {
     this.iStudentDAO = iStudentDAO;
   }
 
-  public List<Student> getStudents(){
+  public List<Student> getStudents() {
     return iStudentDAO.getAll();
   }
 }
