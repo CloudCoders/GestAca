@@ -6,29 +6,29 @@ import com.cloudcoders.gestaca.model.Student;
 import java.util.List;
 
 public interface View {
-    void showCourses(List<Course> courseList);
+  void showCourses(List<Course> courseList);
 
-    void showEmptyCourses();
+  void showEmptyCourses();
 
-    Course askCourse();
+  Course askCourse();
 
-    String askDNI();
+  String askDNI();
 
-    void showStudentNotFound();
+  void showStudentNotFound();
 
-    void showStudentFoundAndEnrolled();
+  void showStudentFoundAndEnrolled();
 
-    void showStudentEnrolled();
+  void showStudentEnrolled();
 
-    void showStudentFoundAndNotEnrolled();
+  void showStudentFoundAndNotEnrolled();
 
-    Student askStudent();
+  Student askStudent();
 
-    void showStudent(Student student);
+  void showStudent(Student student);
 
-    Course askCreateCourse();
+  Course askCreateCourse();
 
-    void showCurseCreated();
+  void showCurseCreated();
 
-    void showCurseAlreadyExists();
+  void showCurseAlreadyExists();
 }
