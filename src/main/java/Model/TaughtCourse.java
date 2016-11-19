@@ -45,26 +45,13 @@ public class TaughtCourse {
     this.course = course;
   }
 
-  public boolean addEnrollment(Enrollment enrollment) {
-    try {
-      this.enrollments.add(enrollment);
-      return true;
-    } catch (Exception e) {
-      System.err.println(e);
-      return false;
-    }
+  public void addEnrollment(Enrollment enrollment) {
+    this.enrollments.add(enrollment);
   }
 
-  public boolean removeEnrollment(Enrollment enrollment) {
-    try {
-      this.enrollments.remove(enrollment);
-      return true;
-    } catch (Exception e) {
-      System.err.println(e);
-      return false;
-    }
+  public void removeEnrollment(Enrollment enrollment) {
+    this.enrollments.remove(enrollment);
   }
-
 
   public int getQuota() {
     return quota;

@@ -23,24 +23,12 @@ public class Office {
     this.taughtCourses = taughtCourses;
   }
 
-  public boolean addTaughtCourses(TaughtCourse taughtCourse) {
-    try {
-      this.taughtCourses.add(taughtCourse);
-      return true;
-    } catch (Exception e) {
-      System.err.println(e);
-      return false;
-    }
+  public void addTaughtCourses(TaughtCourse taughtCourse) {
+    this.taughtCourses.add(taughtCourse);
   }
 
-  public boolean removeTaughtCourses(TaughtCourse taughtCourse) {
-    try {
-      this.taughtCourses.remove(taughtCourse);
-      return true;
-    } catch (Exception e) {
-      System.err.println(e);
-      return false;
-    }
+  public void removeTaughtCourses(TaughtCourse taughtCourse) {
+    this.taughtCourses.remove(taughtCourse);
   }
 
   public int getMaxCapacity() {

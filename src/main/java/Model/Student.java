@@ -14,31 +14,18 @@ public class Student extends Person {
     this.enrollments = new ArrayList<Enrollment>();
   }
 
-
   public Student(int zip, String address, String id, String name, String IBAN, List<Enrollment> enrollments) {
     super(zip, address, id, name);
     this.IBAN = IBAN;
     this.enrollments = enrollments;
   }
 
-  public boolean addEnrollment(Enrollment enrollment) {
-    try {
-      this.enrollments.add(enrollment);
-      return true;
-    } catch (Exception e) {
-      System.err.println(e);
-      return false;
-    }
+  public void addEnrollment(Enrollment enrollment) {
+    this.enrollments.add(enrollment);
   }
 
-  public boolean removeEnrollment(Enrollment enrollment) {
-    try {
-      this.enrollments.remove(enrollment);
-      return true;
-    } catch (Exception e) {
-      System.err.println(e);
-      return false;
-    }
+  public void removeEnrollment(Enrollment enrollment) {
+    this.enrollments.remove(enrollment);
   }
 
   public String getIBAN() {

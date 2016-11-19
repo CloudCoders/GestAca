@@ -23,25 +23,13 @@ public class Course {
     this.taughtCourses = new ArrayList<TaughtCourse>();
   }
 
-  public boolean addTaughtCourse(TaughtCourse taughtCourse) {
-    try {
-      this.taughtCourses.add(taughtCourse);
-      return true;
-    } catch (Exception e) {
-      System.err.println(e);
-      return false;
-    }
+  public void addTaughtCourse(TaughtCourse taughtCourse) {
+    this.taughtCourses.add(taughtCourse);
   }
 
 
-  public boolean removeTaughtCourse(TaughtCourse taughtCourse) {
-    try {
-      this.taughtCourses.remove(taughtCourse);
-      return true;
-    } catch (Exception e) {
-      System.err.println(e);
-      return false;
-    }
+  public void removeTaughtCourse(TaughtCourse taughtCourse) {
+    this.taughtCourses.remove(taughtCourse);
   }
 
   public String getDescription() {

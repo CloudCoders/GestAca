@@ -33,24 +33,12 @@ public class Enrollment {
     this.student = student;
   }
 
-  public boolean addAbsences(Absence absence) {
-    try {
-      this.absences.add(absence);
-      return true;
-    } catch (Exception e) {
-      System.err.println(e);
-      return false;
-    }
+  public void addAbsences(Absence absence) {
+    this.absences.add(absence);
   }
 
-  public boolean removeAbsences(Absence absence) {
-    try {
-      this.absences.remove(absence);
-      return true;
-    } catch (Exception e) {
-      System.err.println(e);
-      return false;
-    }
+  public void removeAbsences(Absence absence) {
+    this.absences.remove(absence);
   }
 
   public Student getStudent() {
