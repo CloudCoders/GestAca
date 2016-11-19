@@ -8,7 +8,5 @@ public interface ICourseDAO {
   Course get(String name);
   List<Course> getAll();
   boolean add(Course course);
-  boolean addAll(List<Course> courses);
   Course remove(Course course);
-  List<Course> removeAll();
 }
