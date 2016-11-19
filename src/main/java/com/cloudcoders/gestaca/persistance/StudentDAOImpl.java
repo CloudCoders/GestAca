@@ -30,7 +30,7 @@ public class StudentDAOImpl implements IStudentDAO {
   }
 
   @Override
-  public Student add(Student student) {
+  public void add(Student student) {
     JSONObject aux = new JSONObject();
 
     aux.put("id",      student.getId());
@@ -58,8 +58,6 @@ public class StudentDAOImpl implements IStudentDAO {
       i++;
     }
     //TO-DO -> if(found) throw new PersistanceException.StudentAlreadyPresnent
-    if(found)
-      return null;
     a.put(aux);
     try {
       parser.writeFile("Student.json", a);
@@ -68,8 +66,6 @@ public class StudentDAOImpl implements IStudentDAO {
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-
-    return null;
   }
 
   @Override
@@ -99,7 +95,7 @@ public class StudentDAOImpl implements IStudentDAO {
         e.printStackTrace();
       }
     }
-    return null;
+    return student;
   }
 
   @Override
