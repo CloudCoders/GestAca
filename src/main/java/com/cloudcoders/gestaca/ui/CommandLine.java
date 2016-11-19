@@ -16,6 +16,11 @@ public class CommandLine implements View {
         this.scanner = scanner;
     }
 
+    public String typeCommand(){
+        System.out.print("> ");
+        return scanner.nextLine();
+    }
+
     public void showCourses(List<Course> courseList) {
         this.courseList = courseList;
         for (int i = 0; i < courseList.size(); i++) {
