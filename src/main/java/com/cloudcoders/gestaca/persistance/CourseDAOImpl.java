@@ -90,7 +90,8 @@ public class CourseDAOImpl implements ICourseDAO{
     JSONObject aux = new JSONObject();
     aux.put("description", course.getDescription());
     aux.put("name", course.getName());
-    aux.put("id", course.getId());
+    int newId = (int) System.currentTimeMillis();
+    aux.put("id", newId);
     aux.put("taughtCourses", course.getTaughtCourses());
 
     JSONArray jsonArray = null;
