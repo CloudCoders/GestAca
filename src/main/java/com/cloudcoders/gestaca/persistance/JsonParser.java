@@ -10,13 +10,15 @@ public class JsonParser {
 
   public JSONArray readFile(ModelsEnum m) throws IOException {
     JSONArray a = null;
-    switch(m) {
-      case ABSENCE:
-        String content = new String(Files.readAllBytes(Paths.get("Absence.json")));
-        a = new JSONArray(content);
-    }
-
+    String content = new String(Files.readAllBytes(Paths.get(m.getArchivo())));
+    a = new JSONArray(content);
     return a;
   }
 
+  public void writeFile(ModelsEnum m, JSONArray a) throws IOException {
+    String file = a.toString();
+    FileOutputStream fos = new FileOutputStream(m.getArchivo());
+    fos.write(file.getBytes());
+    fos.close();
+  }
 }
