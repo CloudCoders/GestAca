@@ -3,11 +3,11 @@ package com.cloudcoders.gestaca.persistance;
 import com.cloudcoders.gestaca.logic.ICourseDAO;
 import com.cloudcoders.gestaca.model.Course;
 import com.cloudcoders.gestaca.model.TaughtCourse;
-import com.sun.org.apache.xpath.internal.operations.String;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +29,8 @@ public class CourseDAOImpl implements ICourseDAO{
     try {
        jsonArray = parser.readFile("Course.json");
     } catch (IOException e) {
+      e.printStackTrace();
+    } catch (URISyntaxException e) {
       e.printStackTrace();
     }
 
@@ -66,6 +68,8 @@ public class CourseDAOImpl implements ICourseDAO{
       jsonArray = parser.readFile("Course.json");
     } catch (IOException e) {
       e.printStackTrace();
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
     }
 
     jsonArray.put(aux);
@@ -73,6 +77,8 @@ public class CourseDAOImpl implements ICourseDAO{
       parser.writeFile("Course.json", jsonArray);
       return true;
     } catch (IOException e) {
+      return false;
+    } catch (URISyntaxException e) {
       return false;
     }
   }

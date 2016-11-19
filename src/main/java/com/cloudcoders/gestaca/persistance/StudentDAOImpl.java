@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,8 @@ public class StudentDAOImpl implements IStudentDAO {
       a = parser.readFile("Student.json");
     } catch(IOException e) {
       e.printStackTrace();
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
     }
 
     a.put(aux);
@@ -51,6 +54,8 @@ public class StudentDAOImpl implements IStudentDAO {
     try {
       parser.writeFile("Student.json", a);
     } catch (IOException e) {
+      e.printStackTrace();
+    } catch (URISyntaxException e) {
       e.printStackTrace();
     }
     return null;
@@ -72,6 +77,8 @@ public class StudentDAOImpl implements IStudentDAO {
       a = parser.readFile("Student.json");
     } catch(IOException e) {
       e.printStackTrace();
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
     }
 
     int i = 0;
@@ -85,6 +92,8 @@ public class StudentDAOImpl implements IStudentDAO {
       try {
         parser.writeFile("Student.json", a);
       } catch (IOException e) {
+        e.printStackTrace();
+      } catch (URISyntaxException e) {
         e.printStackTrace();
       }
     }
@@ -101,6 +110,8 @@ public class StudentDAOImpl implements IStudentDAO {
         list.add((Student) o);
       }
     } catch(IOException e) {
+      e.printStackTrace();
+    } catch (URISyntaxException e) {
       e.printStackTrace();
     }
     return list;
