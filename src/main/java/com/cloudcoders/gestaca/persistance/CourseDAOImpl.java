@@ -2,6 +2,7 @@ package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.logic.ICourseDAO;
 import com.cloudcoders.gestaca.model.Course;
+import com.cloudcoders.gestaca.model.TaughtCourse;
 import com.sun.org.apache.xpath.internal.operations.String;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,8 +37,15 @@ public class CourseDAOImpl implements ICourseDAO{
       String description = (String) jsonObject.get("description");
       String name = (String) jsonObject.get("name");
       int id = (int) jsonObject.get("id");
+      List<TaughtCourse> taughtCourses = (List<TaughtCourse>) jsonObject.get("taughtCourses");
 
-      Course aux = new Course(description, name, id);
+      Course aux;
+      if(taughtCourses != null) {
+        aux = new Course(description, name, id);
+      } else {
+        aux = new Course(description, name, id, taughtCourses);
+      }
+
       courses.add(aux);
     }
 
