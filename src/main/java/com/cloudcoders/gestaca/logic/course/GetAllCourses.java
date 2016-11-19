@@ -5,14 +5,14 @@ import com.cloudcoders.gestaca.model.Course;
 
 import java.util.List;
 
-public class GetAllCoursesUseCase {
+public class GetAllCourses {
   ICourseDAO icourseDAO;
 
-  public GetAllCoursesUseCase(ICourseDAO icourseDAO) {
+  public GetAllCourses(ICourseDAO icourseDAO) {
     this.icourseDAO = icourseDAO;
   }
 
-  public List<Course> getcourses() {
+  public List<Course> getCourses() {
     return icourseDAO.getAll();
   }
 }
