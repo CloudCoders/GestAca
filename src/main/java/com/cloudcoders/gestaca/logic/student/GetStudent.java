@@ -3,15 +3,15 @@ package com.cloudcoders.gestaca.logic.student;
 import com.cloudcoders.gestaca.logic.IStudentDAO;
 import com.cloudcoders.gestaca.model.Student;
 
-public class GetStudentUseCase {
+public class GetStudent {
 
   private IStudentDAO iStudentDAO;
 
-  public GetStudentUseCase(IStudentDAO iStudentDAO) {
+  public GetStudent(IStudentDAO iStudentDAO) {
     this.iStudentDAO = iStudentDAO;
   }
 
-  public Student getStudent(String name) {
-    return iStudentDAO.get(name);
+  public Student getStudent(String dni) {
+    return iStudentDAO.get(dni);
   }
 }

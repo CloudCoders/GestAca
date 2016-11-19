@@ -3,11 +3,11 @@ package com.cloudcoders.gestaca.logic.course;
 import com.cloudcoders.gestaca.logic.ICourseDAO;
 import com.cloudcoders.gestaca.model.Course;
 
-public class GetCourseUseCase {
+public class GetCourse {
   ICourseDAO iCourseDAO;
 
 
-  public GetCourseUseCase(ICourseDAO iCourseDAO) {
+  public GetCourse(ICourseDAO iCourseDAO) {
     this.iCourseDAO = iCourseDAO;
   }
 
