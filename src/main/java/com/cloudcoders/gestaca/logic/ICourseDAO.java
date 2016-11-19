@@ -5,8 +5,8 @@ import com.sun.org.apache.xpath.internal.operations.String;
 import com.sun.tools.javac.util.List;
 
 public interface ICourseDAO {
-  Course getCourseBy(String name);
-  List<Course> getAllCourses();
+  Course get(String name);
+  List<Course> getAll();
   boolean add(Course course);
   boolean addAll(List<Course> courses);
   Course remove(Course course);
