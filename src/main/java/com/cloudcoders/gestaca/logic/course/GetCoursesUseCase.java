@@ -1,5 +1,6 @@
-package com.cloudcoders.gestaca.logic;
+package com.cloudcoders.gestaca.logic.course;
 
+import com.cloudcoders.gestaca.logic.ICourseDAO;
 import com.cloudcoders.gestaca.model.Course;
 import com.cloudcoders.gestaca.model.Student;
 

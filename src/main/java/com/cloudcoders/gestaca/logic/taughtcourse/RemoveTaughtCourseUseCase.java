@@ -1,4 +1,6 @@
-package com.cloudcoders.gestaca.logic;
+package com.cloudcoders.gestaca.logic.taughtcourse;
+
+import com.cloudcoders.gestaca.logic.ITaughtCourseDAO;
 
 public class RemoveTaughtCourseUseCase {
   private ITaughtCourseDAO iTaughtCourseDAO;
