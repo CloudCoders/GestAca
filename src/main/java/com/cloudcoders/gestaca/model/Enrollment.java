@@ -43,6 +43,9 @@ public class Enrollment {
     this.student = student;
   }
 
+  public Enrollment() {
+  }
+
   public void addAbsences(Absence absence) {
     this.absences.add(absence);
   }

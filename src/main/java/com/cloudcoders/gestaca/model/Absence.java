@@ -11,6 +11,9 @@ public class Absence {
     this.id = id;
   }
 
+  public Absence() {
+  }
+
   public Date getDate() {
     return date;
   }

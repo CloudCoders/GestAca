@@ -20,6 +20,9 @@ public class Student extends Person {
     this.enrollments = enrollments;
   }
 
+  public Student() {
+  }
+
   public void addEnrollment(Enrollment enrollment) {
     this.enrollments.add(enrollment);
   }
