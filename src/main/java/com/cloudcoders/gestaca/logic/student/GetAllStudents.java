@@ -5,11 +5,11 @@ import com.cloudcoders.gestaca.model.Student;
 
 import java.util.List;
 
-public class GetAllStudentsUseCase {
+public class GetAllStudents {
 
   private IStudentDAO iStudentDAO;
 
-  public GetAllStudentsUseCase(IStudentDAO iStudentDAO) {
+  public GetAllStudents(IStudentDAO iStudentDAO) {
     this.iStudentDAO = iStudentDAO;
   }
 
