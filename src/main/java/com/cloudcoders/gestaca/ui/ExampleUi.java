@@ -38,6 +38,14 @@ public class ExampleUi {
                     cmd.showStudentEnrolled();
                 }
             }
+            if (command.equals("crear curso")) {
+                cmd.askCreateCourse();
+                if (cursoExiste()) {
+                    cmd.showCurseAlreadyExists();
+                } else {
+                    cmd.showCurseCreated();
+                }
+            }
         } while (!command.equals("exit"));
     }
 
@@ -46,6 +54,10 @@ public class ExampleUi {
     }
 
     public static boolean isInscrito() {
+        return false;
+    }
+
+    public static boolean cursoExiste() {
         return false;
     }
 }
