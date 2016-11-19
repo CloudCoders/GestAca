@@ -14,8 +14,6 @@ public abstract class Person {
     this.name = name;
   }
 
-  public Person() {
-  }
 
   public int getZip() {
     return zip;

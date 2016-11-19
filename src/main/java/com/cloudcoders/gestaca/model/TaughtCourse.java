@@ -64,8 +64,6 @@ public class TaughtCourse {
     this.course = course;
   }
 
-  public TaughtCourse() {
-  }
 
   public void addEnrollment(Enrollment enrollment) {
     this.enrollments.add(enrollment);

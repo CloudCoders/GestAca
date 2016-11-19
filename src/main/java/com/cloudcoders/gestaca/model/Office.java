@@ -23,8 +23,6 @@ public class Office {
     this.taughtCourses = taughtCourses;
   }
 
-  public Office() {
-  }
 
   public void addTaughtCourses(TaughtCourse taughtCourse) {
     this.taughtCourses.add(taughtCourse);

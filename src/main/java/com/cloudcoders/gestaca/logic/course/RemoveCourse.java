@@ -11,7 +11,7 @@ public class RemoveCourse {
     this.iCourseDAO = iCourseDAO;
   }
 
-  public void remove(Course course) {
-    iCourseDAO.remove(course);
+  public Course remove(Course course) {
+    return iCourseDAO.remove(course);
   }
 }
