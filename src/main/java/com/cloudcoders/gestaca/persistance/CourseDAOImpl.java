@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CourseDAOImpl implements ICourseDAO{
@@ -72,15 +73,29 @@ public class CourseDAOImpl implements ICourseDAO{
       e.printStackTrace();
     }
 
-    jsonArray.put(aux);
-    try {
-      parser.writeFile("Course.json", jsonArray);
-      return true;
-    } catch (IOException e) {
-      return false;
-    } catch (URISyntaxException e) {
-      return false;
+    boolean idIsUnique = true;
+    for (Iterator<Object> iterator = jsonArray.iterator(); iterator.hasNext() && idIsUnique; ) {
+      Object o = iterator.next();
+      JSONObject jsonObject = (JSONObject) o;
+      if (((int) jsonObject.get("id")) == course.getId()) {
+        idIsUnique = false;
+      }
     }
+
+    if(idIsUnique) {
+      jsonArray.put(aux);
+      try {
+        parser.writeFile("Course.json", jsonArray);
+        return true;
+      } catch (IOException e) {
+        return false;
+      } catch (URISyntaxException e) {
+        return false;
+      }
+    }
+
+    return false;
+
   }
 
   @Override
