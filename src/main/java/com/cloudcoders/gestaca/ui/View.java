@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface View {
     void showCourses(List<Course> courseList);
-    public void showEmptyCourses();
+    void showEmptyCourses();
     Course askCourse();
     String askDNI();
     void showStudentNotFound();
