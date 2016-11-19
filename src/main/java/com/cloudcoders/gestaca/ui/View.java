@@ -16,4 +16,7 @@ public interface View {
     void showStudentFoundAndNotEnrolled();
     Student askStudent();
     void showStudent(Student student);
+
+    Course askCreateCourse();
+    void showCurseCreated();
 }
