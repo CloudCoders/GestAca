@@ -12,8 +12,8 @@ public class CommandLine implements View {
     private Scanner scanner;
     private String dni;
 
-    public CommandLine() {
-        scanner = new Scanner(System.in);
+    public CommandLine(Scanner scanner) {
+        this.scanner = scanner;
     }
 
     public void showCourses(List<Course> courseList) {
