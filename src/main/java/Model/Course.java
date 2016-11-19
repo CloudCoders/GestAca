@@ -17,8 +17,8 @@ public class Course {
   }
 
   public Course(String description, String name, int id) {
-    description = description;
-    name = name;
+    this.description = description;
+    this.name = name;
     this.id = id;
     this.taughtCourses = new ArrayList<TaughtCourse>();
   }

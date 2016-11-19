@@ -10,7 +10,7 @@ public class Office {
   private List<TaughtCourse> taughtCourses;
 
   public Office(int maxCapacity, String name, int id) {
-    maxCapacity = maxCapacity;
+    this.maxCapacity = maxCapacity;
     this.name = name;
     this.id = id;
     this.taughtCourses = new ArrayList<TaughtCourse>();
