@@ -35,15 +35,8 @@ public class Student extends Person {
     return iban;
   }
 
-  public void setIban(String iban) {
-    this.iban = iban;
-  }
-
   public List<Enrollment> getEnrollments() {
     return enrollments;
   }
 
-  public void setEnrollments(List<Enrollment> enrollments) {
-    this.enrollments = enrollments;
-  }
 }

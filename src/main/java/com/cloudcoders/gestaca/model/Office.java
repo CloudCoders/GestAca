@@ -38,31 +38,16 @@ public class Office {
     return maxCapacity;
   }
 
-  public void setMaxCapacity(int maxCapacity) {
-    maxCapacity = maxCapacity;
-  }
-
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public int getId() {
     return id;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
   public List<TaughtCourse> getTaughtCourses() {
     return taughtCourses;
   }
 
-  public void setTaughtCourses(List<TaughtCourse> taughtCourses) {
-    this.taughtCourses = taughtCourses;
-  }
 }

@@ -30,7 +30,6 @@ public class Course {
     this.taughtCourses.add(taughtCourse);
   }
 
-
   public void removeTaughtCourse(TaughtCourse taughtCourse) {
     this.taughtCourses.remove(taughtCourse);
   }
@@ -39,31 +38,16 @@ public class Course {
     return description;
   }
 
-  public void setDescription(String description) {
-    description = description;
-  }
-
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    name = name;
   }
 
   public int getId() {
     return id;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
   public List<TaughtCourse> getTaughtCourses() {
     return taughtCourses;
   }
 
-  public void setTaughtCourses(List<TaughtCourse> taughtCourses) {
-    taughtCourses = taughtCourses;
-  }
 }

@@ -79,56 +79,28 @@ public class TaughtCourse {
     return quota;
   }
 
-  public void setQuota(int quota) {
-    this.quota = quota;
-  }
-
   public int getSessionDuration() {
     return sessionDuration;
-  }
-
-  public void setSessionDuration(int sessionDuration) {
-    this.sessionDuration = sessionDuration;
   }
 
   public Date getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(Date startDate) {
-    this.startDate = startDate;
-  }
-
   public int getTotalPrice() {
     return totalPrice;
-  }
-
-  public void setTotalPrice(int totalPrice) {
-    this.totalPrice = totalPrice;
   }
 
   public String getTeachingday() {
     return teachingday;
   }
 
-  public void setTeachingday(String teachingday) {
-    this.teachingday = teachingday;
-  }
-
   public Date getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(Date endDate) {
-    this.endDate = endDate;
-  }
-
   public int getId() {
     return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public Office getOffice() {
@@ -143,23 +115,12 @@ public class TaughtCourse {
     return teacher;
   }
 
-  public void setTeacher(Teacher teacher) {
-    this.teacher = teacher;
-  }
-
   public List<Enrollment> getEnrollments() {
     return enrollments;
-  }
-
-  public void setEnrollments(List<Enrollment> enrollments) {
-    this.enrollments = enrollments;
   }
 
   public Course getCourse() {
     return course;
   }
 
-  public void setCourse(Course course) {
-    this.course = course;
-  }
 }
