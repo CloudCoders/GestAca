@@ -25,7 +25,7 @@ public class StudentDAOImpl implements IStudentDAO {
       i++;
     }
     if(found)
-      result = list.get(i);
+      result = list.get(--i);
     return result;
   }
 
@@ -49,8 +49,18 @@ public class StudentDAOImpl implements IStudentDAO {
       e.printStackTrace();
     }
 
+    int i = 0;
+    boolean found = false;
+    Student result = null;
+    while(i < a.length() && !found) {
+      String dni_obj = ((JSONObject)a.get(i)).getString("id");
+      found = student.getId().equals(dni_obj);
+      i++;
+    }
+    //TO-DO -> if(found) throw new PersistanceException.StudentAlreadyPresnent
+    if(found)
+      return null;
     a.put(aux);
-
     try {
       parser.writeFile("Student.json", a);
     } catch (IOException e) {
@@ -58,21 +68,13 @@ public class StudentDAOImpl implements IStudentDAO {
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
+
     return null;
   }
 
   @Override
   public Student remove(Student student) {
-    JSONObject aux = new JSONObject();
-
-    aux.put("id",      student.getId());
-    aux.put("name",    student.getName());
-    aux.put("iban",    student.getIban());
-    aux.put("address", student.getAddress());
-    aux.put("zip",     student.getZip());
-    aux.put("enrollments", student.getEnrollments());
-
-    JSONArray a = null;
+    JSONArray a = new JSONArray();
     try {
       a = parser.readFile("Student.json");
     } catch(IOException e) {
@@ -84,11 +86,11 @@ public class StudentDAOImpl implements IStudentDAO {
     int i = 0;
     boolean found = false;
     while(i < a.length() && !found) {
-      found = student.getId().equals(((Student)a.get(i)).getId()) ;
+      found = student.getId().equals(((JSONObject)a.get(i)).getString("id")) ;
       i++;
     }
     if(found) {
-      a.remove(i);
+      a.remove(--i);
       try {
         parser.writeFile("Student.json", a);
       } catch (IOException e) {
@@ -106,8 +108,12 @@ public class StudentDAOImpl implements IStudentDAO {
     JsonParser parser = new JsonParser();
     try {
       JSONArray a = parser.readFile("Student.json");
-      for (Object o: a) {
-        list.add((Student) o);
+      for (Object o : a) {
+        JSONObject obj = (JSONObject) o;
+        Student st = new Student(obj.getInt("zip"), obj.getString("address"),
+                                 obj.getString("id"),obj.getString("name"),
+                                  obj.getString("iban"));//, obj.get("Enrollments"));
+        list.add(st);
       }
     } catch(IOException e) {
       e.printStackTrace();
