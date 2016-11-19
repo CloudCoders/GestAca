@@ -38,13 +38,13 @@ public class CommandLine implements View {
             try {
                 System.out.print("Course: ");
                 choice = Integer.parseInt(scanner.nextLine());
-                if (choice < 1 || choice > courseList.size()) {
+                if (choice < 0 || choice > courseList.size()) {
                     System.out.println("ERROR: Numero de curso no valido.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("ERROR: Introduce un numero.");
             }
-        } while (choice < 1 || choice > courseList.size());
+        } while (choice < 0 || choice > courseList.size());
         Course course = this.courseList.get(choice);
         return course;
     }

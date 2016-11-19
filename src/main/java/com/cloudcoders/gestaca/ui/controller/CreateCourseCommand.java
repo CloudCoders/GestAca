@@ -16,10 +16,6 @@ public class CreateCourseCommand implements Command {
     this.addCourse = addCourse;
   }
 
-  public CreateCourseCommand(View view) {
-    this.view = view;
-  }
-
   @Override
   public boolean matches(String cmd) {
     return cmd.equals(CREATE_CURSE);

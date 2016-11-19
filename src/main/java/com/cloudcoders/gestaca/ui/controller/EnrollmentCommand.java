@@ -4,6 +4,7 @@ import com.cloudcoders.gestaca.logic.course.GetAllCourses;
 import com.cloudcoders.gestaca.logic.enrollment.AddEnrollment;
 import com.cloudcoders.gestaca.logic.exceptions.InvalidPersonException;
 import com.cloudcoders.gestaca.logic.exceptions.InvalidTaughtCourse;
+import com.cloudcoders.gestaca.logic.student.AddStudent;
 import com.cloudcoders.gestaca.logic.student.GetStudent;
 import com.cloudcoders.gestaca.model.Course;
 import com.cloudcoders.gestaca.model.Enrollment;
@@ -21,15 +22,18 @@ public class EnrollmentCommand implements Command {
   private GetStudent getStudentUseCase;
   private GetAllCourses getAllCoursesUseCase;
   private AddEnrollment addEnrollment;
+  private AddStudent addStudent;
 
   public EnrollmentCommand(View view,
                            GetStudent getStudentUseCase,
                            GetAllCourses getAllCoursesUseCase,
-                           AddEnrollment addEnrollment) {
+                           AddEnrollment addEnrollment,
+                           AddStudent addStudent) {
     this.view = view;
     this.getStudentUseCase = getStudentUseCase;
     this.getAllCoursesUseCase = getAllCoursesUseCase;
     this.addEnrollment = addEnrollment;
+    this.addStudent = addStudent;
   }
 
   @Override
@@ -50,7 +54,9 @@ public class EnrollmentCommand implements Command {
     String dni = view.askDNI();
     Student student = getStudentUseCase.getStudent(dni);
     if (student == null) {
+      view.showStudentNotFound();
       student = view.askStudent();
+      addStudent.add(student);
     }
 
     TaughtCourse taughtCourse = new TaughtCourse(1, 1, null, 1, null, null, 0, null, null, course);
