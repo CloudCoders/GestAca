@@ -23,6 +23,10 @@ public class CommandLine implements View {
         }
     }
 
+    public void showEmptyCourses(){
+        System.out.println("ERROR: No hay cursos disponibles en este momento.");
+    }
+
     public Course askCourse() {
         int choice = -1;
         do {
@@ -82,5 +86,12 @@ public class CommandLine implements View {
         String iban = scanner.nextLine();
         Student student = new Student(zip, address, dni, name, iban);
         return student;
+    }
+
+    public void showStudent(Student student){
+        System.out.print("\tNombre: " + student.getName());
+        System.out.print("\tDireccion: " + student.getAddress());
+        System.out.print("\tZip: " + student.getZip());
+        System.out.print("\tIBAN: " + student.getIban());
     }
 }
