@@ -3,14 +3,13 @@ package com.cloudcoders.gestaca.logic.taughtcourse;
 import com.cloudcoders.gestaca.logic.ITaughtCourseDAO;
 import com.cloudcoders.gestaca.model.TaughtCourse;
 
-public class RemoveTaughtCourseUseCase {
+public class AddTaughtCourse {
   private ITaughtCourseDAO iTaughtCourseDAO;
 
-  public RemoveTaughtCourseUseCase(ITaughtCourseDAO iTaughtCourseDAO) {
+  public AddTaughtCourse(ITaughtCourseDAO iTaughtCourseDAO) {
     this.iTaughtCourseDAO = iTaughtCourseDAO;
   }
-
-  public TaughtCourse remove(TaughtCourse taughtCourse) {
-    return iTaughtCourseDAO.remove(taughtCourse);
+  public void add(TaughtCourse taughtCourse) {
+    iTaughtCourseDAO.add(taughtCourse);
   }
 }
