@@ -1,5 +1,7 @@
 package com.cloudcoders.gestaca.ui.controller;
 
+import com.cloudcoders.gestaca.logic.student.GetStudent;
+import com.cloudcoders.gestaca.model.Enrollment;
 import com.cloudcoders.gestaca.ui.View;
 import org.junit.Test;
 
@@ -19,7 +21,7 @@ public class EnrollmentCommandShould {
   }
 
   private void getEnrollment(View view) {
-    EnrollmentCommand enrollmentCommand = new EnrollmentCommand(view, null, null);
+    EnrollmentCommand enrollmentCommand = new EnrollmentCommand(view);
 
     enrollmentCommand.execute();
   }
