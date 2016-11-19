@@ -19,6 +19,9 @@ public class Teacher extends Person {
     this.taughtCourses = taughtCourses;
   }
 
+  public Teacher() {
+  }
+
   public void addTaughtCourse(TaughtCourse taughtCourse) {
     this.taughtCourses.add(taughtCourse);
   }
