@@ -16,9 +16,39 @@ public class CourseDAOImpl implements ICourseDAO{
 
   private JsonParser parser = new JsonParser();
 
-
   @Override
   public Course get(String name) {
+    List<Course> courses = new ArrayList<>();
+    JSONArray jsonArray = null;
+
+    try {
+      jsonArray = parser.readFile("Course.json");
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    Course res;
+    for (Object o : jsonArray) {
+      JSONObject aux = (JSONObject) o;
+      if (aux.get("name") == name) {
+        if (aux.get("taughtCourses") != null) {
+          res = new Course(
+              (String) aux.get("description"),
+              (String) aux.get("name"),
+              (int) aux.get("id"),
+              (List<TaughtCourse>) aux.get("taughtCourses"));
+        } else {
+          res = new Course(
+              (String) aux.get("description"),
+              (String) aux.get("name"),
+              (int) aux.get("id"));
+        }
+        return res;
+      }
+    }
+
     return null;
   }
 
@@ -56,7 +86,7 @@ public class CourseDAOImpl implements ICourseDAO{
   }
 
   @Override
-  public boolean add(Course course) {
+  public void add(Course course) {
     JSONObject aux = new JSONObject();
     aux.put("description", course.getDescription());
     aux.put("name", course.getName());
@@ -82,19 +112,16 @@ public class CourseDAOImpl implements ICourseDAO{
       }
     }
 
-    if(idIsUnique) {
+    if (idIsUnique) {
       jsonArray.put(aux);
       try {
         parser.writeFile("Course.json", jsonArray);
-        return true;
       } catch (IOException e) {
-        return false;
+        e.printStackTrace();
       } catch (URISyntaxException e) {
-        return false;
+        e.printStackTrace();
       }
     }
-
-    return false;
 
   }
 
