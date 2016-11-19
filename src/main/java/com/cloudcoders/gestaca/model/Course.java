@@ -1,5 +1,7 @@
 package com.cloudcoders.gestaca.model;
 
+import com.sun.org.apache.xpath.internal.operations.String;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class Course {
     this.id = id;
     this.taughtCourses = new ArrayList<TaughtCourse>();
   }
+
+
 
   public void addTaughtCourse(TaughtCourse taughtCourse) {
     this.taughtCourses.add(taughtCourse);
