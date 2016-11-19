@@ -2,9 +2,6 @@ package Model;
 
 import java.util.Date;
 
-/**
- * Created by JoseLlorens on 18/11/2016.
- */
 public class Absence {
     private Date date;
     private int id;

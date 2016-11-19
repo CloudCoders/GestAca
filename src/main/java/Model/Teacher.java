@@ -3,9 +3,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by JoseLlorens on 18/11/2016.
- */
 public class Teacher extends Person {
     private String ssn;
     private List<TaughtCourse> taughtCourses;

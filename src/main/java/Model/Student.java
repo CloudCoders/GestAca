@@ -4,9 +4,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by JoseLlorens on 18/11/2016.
- */
 public class Student extends Person {
     private String IBAN;
     private List<Enrollment> enrollments;

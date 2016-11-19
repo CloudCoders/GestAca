@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by JoseLlorens on 18/11/2016.
- */
 public class Enrollment {
     private Date cancellationDate;
     private Date enrollemntDate;
