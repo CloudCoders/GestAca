@@ -10,10 +10,10 @@ public class AddStudentUseCase {
     this.iStudentDAO = iStudentDAO;
   }
 
-  public void add(Student student){
-    try{
+  public void add(Student student) {
+    try {
       iStudentDAO.add(student);
-    }catch(Exception e){
+    } catch (Exception e) {
       System.err.println(e);
     }
   }

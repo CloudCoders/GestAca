@@ -8,7 +8,7 @@ public class RemoveTaughtCourseUseCase {
   public RemoveTaughtCourseUseCase(ITaughtCourseDAO iTaughtCourseDAO) {
     this.iTaughtCourseDAO = iTaughtCourseDAO;
   }
-  public void remove(int id){
+  public void remove(int id) {
     iTaughtCourseDAO.remove(id);
   }
 }
