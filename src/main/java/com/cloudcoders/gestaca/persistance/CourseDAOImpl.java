@@ -14,7 +14,11 @@ import java.util.List;
 
 public class CourseDAOImpl implements ICourseDAO{
 
-  private JsonParser parser = new JsonParser();
+  private JsonParser parser;
+
+  public CourseDAOImpl(JsonParser parser) {
+    this.parser = parser;
+  }
 
   @Override
   public Course get(String name) {
@@ -70,15 +74,9 @@ public class CourseDAOImpl implements ICourseDAO{
       String description = (String) jsonObject.get("description");
       String name = (String) jsonObject.get("name");
       int id = (int) jsonObject.get("id");
-      List<TaughtCourse> taughtCourses = (List<TaughtCourse>) jsonObject.get("taughtCourses");
+      JSONArray taughtCoursesJSON = (JSONArray) jsonObject.get("taughtCourses");
 
-      Course aux;
-      if(taughtCourses != null) {
-        aux = new Course(description, name, id);
-      } else {
-        aux = new Course(description, name, id, taughtCourses);
-      }
-
+      Course aux = new Course(description, name, id);
       courses.add(aux);
     }
 

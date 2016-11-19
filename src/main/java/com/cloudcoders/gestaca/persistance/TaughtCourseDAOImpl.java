@@ -103,23 +103,8 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
       Office office = (Office) jsonObject.get("office");
       Teacher teacher = (Teacher) jsonObject.get("teacher");
       Course course = (Course) jsonObject.get("course");
-      List<Enrollment> enrollments = (List<Enrollment>) jsonObject.get("enrollments");
 
-      TaughtCourse aux;
-      if(taughtCourses != null) {
-        aux = new TaughtCourse(quota,
-            sessionDuration,
-            startDate,
-            totalPrice,
-            teachingday,
-            endDate,
-            id,
-            office,
-            teacher,
-            enrollments,
-            course);
-      } else {
-        aux = new TaughtCourse(quota,
+      TaughtCourse aux = new TaughtCourse(quota,
             sessionDuration,
             startDate,
             totalPrice,
@@ -129,7 +114,6 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
             office,
             teacher,
             course);
-      }
 
       taughtCourses.add(aux);
     }
