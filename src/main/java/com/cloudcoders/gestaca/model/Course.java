@@ -23,7 +23,6 @@ public class Course {
     this.taughtCourses = new ArrayList<TaughtCourse>();
   }
 
-
   public void addTaughtCourse(TaughtCourse taughtCourse) {
     this.taughtCourses.add(taughtCourse);
   }
