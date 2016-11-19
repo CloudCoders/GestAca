@@ -2,9 +2,13 @@ package com.cloudcoders.gestaca.ui.controller;
 
 import com.cloudcoders.gestaca.logic.course.GetAllCourses;
 import com.cloudcoders.gestaca.logic.enrollment.AddEnrollment;
+import com.cloudcoders.gestaca.logic.exceptions.InvalidPersonException;
+import com.cloudcoders.gestaca.logic.exceptions.InvalidTaughtCourse;
 import com.cloudcoders.gestaca.logic.student.GetStudent;
 import com.cloudcoders.gestaca.model.Course;
+import com.cloudcoders.gestaca.model.Enrollment;
 import com.cloudcoders.gestaca.model.Student;
+import com.cloudcoders.gestaca.model.TaughtCourse;
 import com.cloudcoders.gestaca.ui.View;
 
 import java.util.List;
@@ -28,7 +32,6 @@ public class EnrollmentCommand implements Command {
     this.addEnrollment = addEnrollment;
   }
 
-
   @Override
   public boolean matches(String cmd) {
     return cmd.equals(ENROLLMENT);
@@ -50,7 +53,17 @@ public class EnrollmentCommand implements Command {
       student = view.askStudent();
     }
 
-
+    TaughtCourse taughtCourse = new TaughtCourse(1, 1, null, 1, null, null, 0, null, null, course);
+    Enrollment enrollment = new Enrollment(null, null, false, 0, taughtCourse, student);
+    try {
+      addEnrollment.add(enrollment);
+      view.showStudent(student);
+    } catch (InvalidPersonException e) {
+      e.printStackTrace();
+      view.showStudentNotFound();
+    } catch (InvalidTaughtCourse invalidTaughtCourse) {
+      view.showStudentFoundAndNotEnrolled();
+    }
   }
 
 }
