@@ -55,55 +55,28 @@ public class Enrollment {
     return student;
   }
 
-  public void setStudent(Student student) {
-    this.student = student;
-  }
-
   public Date getCancellationDate() {
     return cancellationDate;
-  }
-
-  public void setCancellationDate(Date cancellationDate) {
-    this.cancellationDate = cancellationDate;
   }
 
   public Date getEnrollemntDate() {
     return enrollemntDate;
   }
 
-  public void setEnrollemntDate(Date enrollemntDate) {
-    this.enrollemntDate = enrollemntDate;
-  }
-
   public boolean isUniquePayment() {
     return uniquePayment;
-  }
-
-  public void setUniquePayment(boolean uniquePayment) {
-    this.uniquePayment = uniquePayment;
   }
 
   public int getId() {
     return id;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
   public List<Absence> getAbsences() {
     return absences;
-  }
-
-  public void setAbsences(List<Absence> absences) {
-    this.absences = absences;
   }
 
   public TaughtCourse getTaughtCourse() {
     return taughtCourse;
   }
 
-  public void setTaughtCourse(TaughtCourse taughtCourse) {
-    this.taughtCourse = taughtCourse;
-  }
 }
