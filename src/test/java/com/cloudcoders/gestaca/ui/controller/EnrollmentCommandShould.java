@@ -13,20 +13,22 @@ public class EnrollmentCommandShould {
   public void
   call_to_show_all_courses() {
     View view = mock(View.class);
-    EnrollmentCommand enrollmentCommand = new EnrollmentCommand(view);
-
-    enrollmentCommand.execute();
+    getEnrollment(view);
 
     verify(view).showCourses(anyObject());
+  }
+
+  private void getEnrollment(View view) {
+    EnrollmentCommand enrollmentCommand = new EnrollmentCommand(view, null, null);
+
+    enrollmentCommand.execute();
   }
 
   @Test
   public void
   ask_for_dni() {
     View view = mock(View.class);
-    EnrollmentCommand enrollmentCommand = new EnrollmentCommand(view);
-
-    enrollmentCommand.execute();
+    getEnrollment(view);
 
     verify(view).askDNI();
   }
@@ -35,9 +37,7 @@ public class EnrollmentCommandShould {
   public void
   ask_student() {
     View view = mock(View.class);
-    EnrollmentCommand enrollmentCommand = new EnrollmentCommand(view);
-
-    enrollmentCommand.execute();
+    getEnrollment(view);
 
     verify(view).askStudent();
   }
@@ -46,9 +46,7 @@ public class EnrollmentCommandShould {
   public void
   call_to_enrollment() {
     View view = mock(View.class);
-    EnrollmentCommand enrollmentCommand = new EnrollmentCommand(view);
-
-    enrollmentCommand.execute();
+    getEnrollment(view);
 
   }
 
