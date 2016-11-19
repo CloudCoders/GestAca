@@ -21,7 +21,7 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
   }
 
   @Override
-  public boolean add(TaughtCourse taughtCourse) {
+  public void add(TaughtCourse taughtCourse) {
     JSONObject aux = new JSONObject();
     aux.put("quota", taughtCourse.getQuota());
     aux.put("sessionDuration", taughtCourse.getSessionDuration());
@@ -58,19 +58,17 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
       jsonArray.put(aux);
       try {
         parser.writeFile("TaughtCourse.json", jsonArray);
-        return true;
       } catch (IOException e) {
-        return false;
+        e.printStackTrace();
       } catch (URISyntaxException e) {
-        return false;
+        e.printStackTrace();
       }
     }
 
-    return false;
   }
 
   @Override
-  public TaughtCourse remove(int id) {
+  public TaughtCourse remove(TaughtCourse taughtCourse) {
     return null;
   }
 
