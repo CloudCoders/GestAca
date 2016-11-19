@@ -10,7 +10,7 @@ public class ExampleUi {
 
     public static void main(String... args) {
         Scanner scanner = new Scanner(System.in);
-        CommandLine cmd = new CommandLine();
+        CommandLine cmd = new CommandLine(scanner);
         String command;
 
         List<Course> courseList = new ArrayList<Course>();
