@@ -1,5 +1,6 @@
-package com.cloudcoders.gestaca.logic;
+package com.cloudcoders.gestaca.logic.student;
 
+import com.cloudcoders.gestaca.logic.IStudentDAO;
 import com.cloudcoders.gestaca.model.Student;
 
 public class AddStudentUseCase {
