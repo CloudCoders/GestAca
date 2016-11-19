@@ -23,7 +23,7 @@ public class CommandLine implements View {
         }
     }
 
-    public void showEmptyCourses(){
+    public void showEmptyCourses() {
         System.out.println("ERROR: No hay cursos disponibles en este momento.");
     }
 
@@ -88,7 +88,7 @@ public class CommandLine implements View {
         return student;
     }
 
-    public void showStudent(Student student){
+    public void showStudent(Student student) {
         System.out.print("\tNombre: " + student.getName());
         System.out.print("\tDireccion: " + student.getAddress());
         System.out.print("\tZip: " + student.getZip());
@@ -100,11 +100,15 @@ public class CommandLine implements View {
         String name = scanner.nextLine();
         System.out.println("\tDescripcion: ");
         String description = scanner.nextLine();
-        Course course = new Course(description,name,0);
+        Course course = new Course(description, name, 0);
         return course;
     }
 
     public void showCurseCreated() {
         System.out.println("Curso creado.");
+    }
+
+    public void showCurseAlreadyExists() {
+        System.out.println("Ya existe el curso introducido.");
     }
 }
