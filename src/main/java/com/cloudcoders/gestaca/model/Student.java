@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends Person {
-  private String IBAN;
+  private String iban;
   private List<Enrollment> enrollments;
 
-  public Student(int zip, String address, String id, String name, String IBAN) {
+  public Student(int zip, String address, String id, String name, String iban) {
     super(zip, address, id, name);
-    this.IBAN = IBAN;
+    this.iban = iban;
     this.enrollments = new ArrayList<Enrollment>();
   }
 
-  public Student(int zip, String address, String id, String name, String IBAN, List<Enrollment> enrollments) {
+  public Student(int zip, String address, String id, String name, String iban, List<Enrollment> enrollments) {
     super(zip, address, id, name);
-    this.IBAN = IBAN;
+    this.iban = iban;
     this.enrollments = enrollments;
   }
 
@@ -28,12 +28,12 @@ public class Student extends Person {
     this.enrollments.remove(enrollment);
   }
 
-  public String getIBAN() {
-    return IBAN;
+  public String getIban() {
+    return iban;
   }
 
-  public void setIBAN(String IBAN) {
-    this.IBAN = IBAN;
+  public void setIban(String iban) {
+    this.iban = iban;
   }
 
   public List<Enrollment> getEnrollments() {

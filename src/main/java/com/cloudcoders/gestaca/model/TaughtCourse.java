@@ -17,7 +17,16 @@ public class TaughtCourse {
   private List<Enrollment> enrollments;
   private Course course;
 
-  public TaughtCourse(int quota, int sessionDuration, Date startDate, int totalPrice, String teachingday, Date endDate, int id, Office office, Teacher teacher, Course course) {
+  public TaughtCourse(int quota,
+                      int sessionDuration,
+                      Date startDate,
+                      int totalPrice,
+                      String teachingday,
+                      Date endDate,
+                      int id,
+                      Office office,
+                      Teacher teacher,
+                      Course course) {
     this.quota = quota;
     this.sessionDuration = sessionDuration;
     this.startDate = startDate;
@@ -31,7 +40,17 @@ public class TaughtCourse {
     this.enrollments = new ArrayList<Enrollment>();
   }
 
-  public TaughtCourse(int quota, int sessionDuration, Date startDate, int totalPrice, String teachingday, Date endDate, int id, Office office, Teacher teacher, List<Enrollment> enrollments, Course course) {
+  public TaughtCourse(int quota,
+                      int sessionDuration,
+                      Date startDate,
+                      int totalPrice,
+                      String teachingday,
+                      Date endDate,
+                      int id,
+                      Office office,
+                      Teacher teacher,
+                      List<Enrollment> enrollments,
+                      Course course) {
     this.quota = quota;
     this.sessionDuration = sessionDuration;
     this.startDate = startDate;

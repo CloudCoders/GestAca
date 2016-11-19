@@ -13,7 +13,12 @@ public class Enrollment {
   private TaughtCourse taughtCourse;
   private Student student;
 
-  public Enrollment(Date cancellationDate, Date enrollemntDate, boolean uniquePayment, int id, TaughtCourse taughtCourse, Student student) {
+  public Enrollment(Date cancellationDate,
+                    Date enrollemntDate,
+                    boolean uniquePayment,
+                    int id,
+                    TaughtCourse taughtCourse,
+                    Student student) {
     this.cancellationDate = cancellationDate;
     this.enrollemntDate = enrollemntDate;
     this.uniquePayment = uniquePayment;
@@ -23,7 +28,12 @@ public class Enrollment {
     this.absences = new ArrayList<Absence>();
   }
 
-  public Enrollment(Date cancellationDate, Date enrollemntDate, boolean uniquePayment, int id, List<Absence> absences, TaughtCourse taughtCourse, Student student) {
+  public Enrollment(Date cancellationDate,
+                    Date enrollemntDate,
+                    boolean uniquePayment,
+                    int id, List<Absence> absences,
+                    TaughtCourse taughtCourse,
+                    Student student) {
     this.cancellationDate = cancellationDate;
     this.enrollemntDate = enrollemntDate;
     this.uniquePayment = uniquePayment;
