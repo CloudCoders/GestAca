@@ -1,11 +1,8 @@
 package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.model.Student;
-import org.json.JSONArray;
-import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +10,7 @@ public class StudentDAOImplTest {
 
   @Test
   public void add_student() {
-    Student st = new Student(03725,"C/Dtr 2","554564m", "Alsx asdas", "45454sf");
+    Student st = new Student(03725, "C/Dtr 2", "554564m", "Alsx asdas", "45454sf");
     StudentDAOImpl dao = new StudentDAOImpl();
     dao.add(st);
     Student st2 = dao.get(st.getId());
@@ -27,9 +24,9 @@ public class StudentDAOImplTest {
 
   @Test
   public void removeStudent() {
-    Student st1 = new Student(03725,"C/Dtr 1","154564m", "Alsx asdas", "45454sf");
-    Student st2 = new Student(03725,"C/Dtr 2","254554m", "Alsx asdas", "45454sf");
-    Student st3 = new Student(02147,"C/Dtr 3","388854m", "Alsx asdas", "45454sf");
+    Student st1 = new Student(03725, "C/Dtr 1", "154564m", "Alsx asdas", "45454sf");
+    Student st2 = new Student(03725, "C/Dtr 2", "254554m", "Alsx asdas", "45454sf");
+    Student st3 = new Student(02147, "C/Dtr 3", "388854m", "Alsx asdas", "45454sf");
 
     StudentDAOImpl dao = new StudentDAOImpl();
     dao.add(st1);
