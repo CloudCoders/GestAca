@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IStudentDAO {
 
-  Student get(String dni);
+  Student get(String id);
 
   void add(Student student);
 

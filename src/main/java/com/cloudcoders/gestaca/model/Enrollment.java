@@ -8,9 +8,9 @@ public class Enrollment {
   private Date cancellationDate;
   private Date enrollemntDate;
   private boolean uniquePayment;
-  private int id;
   private List<Absence> absences;
   private TaughtCourse taughtCourse;
+  private int id;
   private Student student;
 
   public Enrollment(Date cancellationDate,
