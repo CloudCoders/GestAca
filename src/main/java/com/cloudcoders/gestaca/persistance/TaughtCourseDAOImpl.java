@@ -1,12 +1,14 @@
 package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.logic.ITaughtCourseDAO;
-import com.cloudcoders.gestaca.model.*;
+import com.cloudcoders.gestaca.model.Course;
+import com.cloudcoders.gestaca.model.Office;
+import com.cloudcoders.gestaca.model.TaughtCourse;
+import com.cloudcoders.gestaca.model.Teacher;
+import com.cloudcoders.gestaca.persistance.dal.FileDAL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -38,13 +40,7 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
 
     JSONArray jsonArray = null;
 
-    try {
-      jsonArray = parser.readFile("TaughtCourse.json");
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+//    jsonArray = parser.readFile("TaughtCourse.json");
 
     boolean idIsUnique = true;
     for (Iterator<Object> iterator = jsonArray.iterator(); iterator.hasNext() && idIsUnique; ) {
@@ -57,13 +53,7 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
 
     if(idIsUnique) {
       jsonArray.put(aux);
-      try {
-        parser.writeFile("TaughtCourse.json", jsonArray);
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (URISyntaxException e) {
-        e.printStackTrace();
-      }
+//      parser.writeFile("TaughtCourse.json", jsonArray);
     }
 
   }
@@ -83,13 +73,7 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
     List<TaughtCourse> taughtCourses = new ArrayList<>();
     JSONArray jsonArray = null;
 
-    try {
-      jsonArray = parser.readFile("TaughtCourse.json");
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+//    jsonArray = parser.readFile("TaughtCourse.json");
 
     for(Object o : jsonArray) {
       JSONObject jsonObject = (JSONObject) o;

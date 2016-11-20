@@ -13,7 +13,9 @@ public class AddEnrollment  {
   ITaughtCourseDAO iTaughtCourseDAO;
   IStudentDAO iStudentDAO;
 
-  public AddEnrollment(IEnrollmentDAO iEnrollmentDAO, ITaughtCourseDAO iTaughtCourseDAO, IStudentDAO iStudentDAO) {
+  public AddEnrollment(IEnrollmentDAO iEnrollmentDAO,
+                       ITaughtCourseDAO iTaughtCourseDAO,
+                       IStudentDAO iStudentDAO) {
     this.iEnrollmentDAO = iEnrollmentDAO;
     this.iTaughtCourseDAO = iTaughtCourseDAO;
     this.iStudentDAO = iStudentDAO;
