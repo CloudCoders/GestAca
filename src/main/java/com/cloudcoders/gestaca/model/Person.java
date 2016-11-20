@@ -1,7 +1,9 @@
 package com.cloudcoders.gestaca.model;
 
 
-public abstract class Person {
+import java.io.Serializable;
+
+public abstract class Person implements Serializable {
   private int zip;
   private String address;
   private String id;

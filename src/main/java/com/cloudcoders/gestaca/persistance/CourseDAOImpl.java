@@ -22,38 +22,16 @@ public class CourseDAOImpl implements ICourseDAO{
 
   @Override
   public Course get(String name) {
-    List<Course> courses = new ArrayList<>();
-    JSONArray jsonArray = null;
-
-    try {
-      jsonArray = parser.readFile("Course.json");
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    Course res;
-    for (Object o : jsonArray) {
-      JSONObject aux = (JSONObject) o;
-      if (aux.get("name") == name) {
-        if (aux.get("taughtCourses") != null) {
-          res = new Course(
-              (String) aux.get("description"),
-              (String) aux.get("name"),
-              (int) aux.get("id"),
-              (List<TaughtCourse>) aux.get("taughtCourses"));
-        } else {
-          res = new Course(
-              (String) aux.get("description"),
-              (String) aux.get("name"),
-              (int) aux.get("id"));
-        }
-        return res;
+    Course res = null;
+    for(Course c : getAll()) {
+      System.out.println(c.getName());
+      System.out.println(name);
+      if (c.getName().equals(name)) {
+        res = c;
       }
     }
 
-    return null;
+    return res;
   }
 
   @Override
@@ -74,7 +52,6 @@ public class CourseDAOImpl implements ICourseDAO{
       String description = (String) jsonObject.get("description");
       String name = (String) jsonObject.get("name");
       int id = (int) jsonObject.get("id");
-      JSONArray taughtCoursesJSON = (JSONArray) jsonObject.get("taughtCourses");
 
       Course aux = new Course(description, name, id);
       courses.add(aux);
@@ -106,7 +83,7 @@ public class CourseDAOImpl implements ICourseDAO{
     for (Iterator<Object> iterator = jsonArray.iterator(); iterator.hasNext() && idIsUnique; ) {
       Object o = iterator.next();
       JSONObject jsonObject = (JSONObject) o;
-      if (((int) jsonObject.get("id")) == course.getId()) {
+      if (((int) jsonObject.get("id")) == newId) {
         idIsUnique = false;
       }
     }

@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,10 +26,10 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
     JSONObject aux = new JSONObject();
     aux.put("quota", taughtCourse.getQuota());
     aux.put("sessionDuration", taughtCourse.getSessionDuration());
-    aux.put("startDate", taughtCourse.getStartDate());
+    aux.put("startDate", taughtCourse.getStartDate().getTime());
     aux.put("totalPrice", taughtCourse.getTotalPrice());
     aux.put("teachingday", taughtCourse.getTeachingday());
-    aux.put("endDate", taughtCourse.getEndDate());
+    aux.put("endDate", taughtCourse.getEndDate().getTime());
     int newId = (int) System.currentTimeMillis();
     aux.put("id", newId);
     aux.put("office", taughtCourse.getOffice());
@@ -95,10 +96,10 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
       JSONObject jsonObject = (JSONObject) o;
       int quota = (int) jsonObject.get("quota");
       int sessionDuration = (int) jsonObject.get("sessionDuration");
-      Date startDate = (Date) jsonObject.get("startDate");
+      Date startDate = new Date((long) jsonObject.get("startDate"));
       int totalPrice = (int) jsonObject.get("totalPrice");
       String teachingday = (String) jsonObject.get("teachingday");
-      Date endDate = (Date) jsonObject.get("endDate");
+      Date endDate = new Date((long) jsonObject.get("endDate"));
       int id = (int) jsonObject.get("id");
       Office office = (Office) jsonObject.get("office");
       Teacher teacher = (Teacher) jsonObject.get("teacher");

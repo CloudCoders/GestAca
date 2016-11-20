@@ -1,8 +1,9 @@
 package com.cloudcoders.gestaca.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Absence {
+public class Absence implements Serializable{
   private Date date;
   private int id;
 

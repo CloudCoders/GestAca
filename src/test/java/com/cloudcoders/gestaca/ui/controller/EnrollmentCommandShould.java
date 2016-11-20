@@ -2,6 +2,7 @@ package com.cloudcoders.gestaca.ui.controller;
 
 import com.cloudcoders.gestaca.logic.course.GetAllCourses;
 import com.cloudcoders.gestaca.logic.enrollment.AddEnrollment;
+import com.cloudcoders.gestaca.logic.student.AddStudent;
 import com.cloudcoders.gestaca.logic.student.GetStudent;
 import com.cloudcoders.gestaca.model.Course;
 import com.cloudcoders.gestaca.ui.View;
@@ -30,7 +31,8 @@ public class EnrollmentCommandShould {
     GetAllCourses getAllCourses = mock(GetAllCourses.class);
     given(getAllCourses.getCourses()).willReturn(Arrays.asList(new Course("", "", 0)));
     AddEnrollment addEnrollment = mock(AddEnrollment.class);
-    EnrollmentCommand enrollmentCommand = new EnrollmentCommand(view, getStudent, getAllCourses, addEnrollment);
+    AddStudent addStudent = mock(AddStudent.class);
+    EnrollmentCommand enrollmentCommand = new EnrollmentCommand(view, getStudent, getAllCourses, addEnrollment, addStudent);
 
     enrollmentCommand.execute();
   }
