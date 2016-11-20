@@ -9,7 +9,7 @@ public interface ITaughtCourseDAO {
 
   TaughtCourse remove(TaughtCourse taughtCourse);
 
-  TaughtCourse get(int id);
+  TaughtCourse get(long id);
 
   List<TaughtCourse> getAll();
 }

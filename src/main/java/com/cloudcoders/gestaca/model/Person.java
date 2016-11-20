@@ -3,7 +3,7 @@ package com.cloudcoders.gestaca.model;
 
 import java.io.Serializable;
 
-public abstract class Person implements Serializable {
+public abstract class Person {
   private int zip;
   private String address;
   private String id;

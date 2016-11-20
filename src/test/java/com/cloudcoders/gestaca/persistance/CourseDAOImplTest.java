@@ -2,20 +2,41 @@ package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.model.Course;
 import com.cloudcoders.gestaca.persistance.dal.FileDAL;
+import com.cloudcoders.gestaca.persistance.dal.WriteFileException;
 import com.cloudcoders.gestaca.persistance.parser.JsonParser;
 import com.google.gson.Gson;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class CourseDAOImplTest {
 
+  private FileDAL fileDAL;
+  private JsonParser jsonParser;
+
+  @Before
+  public void setup() {
+    fileDAL = new FileDAL();
+    jsonParser = new JsonParser(new Gson());
+    List<Course> courses = new ArrayList<>();
+    String coursesJson = jsonParser.toJson(courses);
+    try {
+      fileDAL.writeFile("Course.json", coursesJson);
+    } catch (WriteFileException e) {
+      e.printStackTrace();
+    }
+  }
+
   @Test
   public void should_add_course() {
-    Course course = new Course("Prueba", "Prueba", 0);
-    FileDAL fileDAL = new FileDAL();
-    JsonParser jsonParser = new JsonParser(new Gson());
+    Course course = new Course("Test", "Course_Test", 0);
     CourseDAOImpl courseDAO = new CourseDAOImpl(fileDAL, jsonParser);
 
     int prevLength = courseDAO.getAll().size();
@@ -23,20 +44,19 @@ public class CourseDAOImplTest {
     int postLength = courseDAO.getAll().size();
     Course res = courseDAO.getAll().get(postLength-1);
 
-    assertEquals(prevLength, postLength-1);
-    assertEquals(course.getName(), res.getName());
-    assertEquals(course.getDescription(), res.getDescription());
-    assertNotEquals(course.getId(), res.getId());
-
+    assertThat(prevLength, is(postLength-1));
+    assertThat(course.getName(), is(res.getName()));
+    assertThat(course.getDescription(), is(res.getDescription()));
+    assertThat(course.getId(), is(not(res.getId())));
 
   }
 
   @Test
   public void should_read_course() {
-    FileDAL fileDAL = new FileDAL();
     JsonParser jsonParser = new JsonParser(new Gson());
     CourseDAOImpl courseDAO = new CourseDAOImpl(fileDAL, jsonParser);
     Course expected = new Course("Test", "Course_Test", 0);
+    courseDAO.add(expected);
     Course actual = courseDAO.get("Course_Test");
 
     assertEquals(actual.getName(), expected.getName());

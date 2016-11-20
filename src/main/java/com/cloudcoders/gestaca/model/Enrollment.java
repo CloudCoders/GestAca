@@ -1,17 +1,16 @@
 package com.cloudcoders.gestaca.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Enrollment implements Serializable {
+public class Enrollment {
   private Date cancellationDate;
   private Date enrollemntDate;
   private boolean uniquePayment;
   private List<Absence> absences;
   private TaughtCourse taughtCourse;
-  private int id;
+  private long id;
   private Student student;
 
   public Enrollment(Date cancellationDate,
@@ -68,7 +67,7 @@ public class Enrollment implements Serializable {
     return uniquePayment;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 
