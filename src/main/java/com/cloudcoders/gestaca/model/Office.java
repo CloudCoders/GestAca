@@ -1,13 +1,12 @@
 package com.cloudcoders.gestaca.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Office implements Serializable {
+public class Office {
   private int maxCapacity;
   private String name;
-  private int id;
+  private long id;
   private List<TaughtCourse> taughtCourses;
 
   public Office(int maxCapacity, String name, int id) {
@@ -41,7 +40,7 @@ public class Office implements Serializable {
     return name;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 

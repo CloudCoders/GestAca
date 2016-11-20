@@ -1,11 +1,10 @@
 package com.cloudcoders.gestaca.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Absence implements Serializable{
+public class Absence {
   private Date date;
-  private int id;
+  private long id;
 
   public Absence(Date date, int id) {
     this.date = date;
@@ -16,7 +15,7 @@ public class Absence implements Serializable{
     return date;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 

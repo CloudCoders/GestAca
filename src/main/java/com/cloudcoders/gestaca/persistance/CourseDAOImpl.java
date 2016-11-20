@@ -22,14 +22,11 @@ public class CourseDAOImpl implements ICourseDAO {
 
   @Override
   public Course get(String name) {
-    Course res = null;
-    for (Course c : getAll()) {
-      System.out.println(c.getName());
-      System.out.println(name);
-      if (c.getName().equals(name)) {
-        res = c;
-      }
-    }
+    Course res;
+    res = getAll().stream()
+        .filter(course -> course.getName().equals(name))
+        .findFirst()
+        .get();
 
     return res;
   }
@@ -48,7 +45,7 @@ public class CourseDAOImpl implements ICourseDAO {
 
   @Override
   public void add(Course newCourse) {
-    int newId = (int) System.currentTimeMillis();
+    long newId = System.currentTimeMillis();
 
     try {
       List<Course> courses = getAll();
@@ -59,7 +56,8 @@ public class CourseDAOImpl implements ICourseDAO {
           .isPresent();
 
       if (isUnique) {
-        Course course = new Course(newCourse.getDescription(), newCourse.getName(), newId);
+        Course course;
+        course = new Course(newCourse.getDescription(), newCourse.getName(), newId);
         courses.add(course);
         String coursesJson = parser.toJson(courses);
         fileDAL.writeFile("Course.json", coursesJson);

@@ -64,7 +64,7 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
   }
 
   @Override
-  public TaughtCourse get(int id) {
+  public TaughtCourse get(long id) {
     return null;
   }
 
