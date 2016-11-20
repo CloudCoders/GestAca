@@ -8,13 +8,15 @@ import com.cloudcoders.gestaca.logic.exceptions.InvalidTaughtCourse;
 import com.cloudcoders.gestaca.model.Enrollment;
 
 public class AddEnrollment  {
+
   IEnrollmentDAO iEnrollmentDAO;
   ITaughtCourseDAO iTaughtCourseDAO;
   IStudentDAO iStudentDAO;
 
-
-  public AddEnrollment(IEnrollmentDAO iEnrollmentDAO) {
+  public AddEnrollment(IEnrollmentDAO iEnrollmentDAO, ITaughtCourseDAO iTaughtCourseDAO, IStudentDAO iStudentDAO) {
     this.iEnrollmentDAO = iEnrollmentDAO;
+    this.iTaughtCourseDAO = iTaughtCourseDAO;
+    this.iStudentDAO = iStudentDAO;
   }
 
   public void add(Enrollment enrollment) throws InvalidPersonException, InvalidTaughtCourse {

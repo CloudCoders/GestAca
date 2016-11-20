@@ -1,10 +1,11 @@
 package com.cloudcoders.gestaca.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TaughtCourse {
+public class TaughtCourse implements Serializable {
   private int quota;
   private int sessionDuration;
   private Date startDate;

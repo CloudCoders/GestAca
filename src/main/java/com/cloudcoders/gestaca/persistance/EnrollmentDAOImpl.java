@@ -1,7 +1,6 @@
 package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.logic.IEnrollmentDAO;
-import com.cloudcoders.gestaca.model.Absence;
 import com.cloudcoders.gestaca.model.Enrollment;
 import com.cloudcoders.gestaca.model.Student;
 import com.cloudcoders.gestaca.model.TaughtCourse;

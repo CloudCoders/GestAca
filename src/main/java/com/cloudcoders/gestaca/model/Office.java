@@ -1,9 +1,10 @@
 package com.cloudcoders.gestaca.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Office {
+public class Office implements Serializable {
   private int maxCapacity;
   private String name;
   private int id;
