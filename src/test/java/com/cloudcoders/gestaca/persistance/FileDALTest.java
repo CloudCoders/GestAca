@@ -1,19 +1,17 @@
 package com.cloudcoders.gestaca.persistance;
 
+import com.cloudcoders.gestaca.persistance.dal.FileDAL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
-
-public class JsonParserTest {
+public class FileDALTest {
 
   @Test
   public void shouldReadFile() {
-    JsonParser parser = new JsonParser();
+    FileDAL parser = new FileDAL();
     JSONArray resArr = null;
     JSONObject res = null;
 
@@ -22,14 +20,7 @@ public class JsonParserTest {
     aux.put("name", "Prueba1");
     aux.put("id", 1);
 
-    try {
-      resArr = parser.readFile("Course.json");
-      res = resArr.getJSONObject(0);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+//    resArr = parser.readFile("Course.json");
 
     assertEquals(res.get("description"), aux.get("description"));
     assertEquals(res.get("name"), aux.get("name"));
@@ -40,7 +31,7 @@ public class JsonParserTest {
 
   @Test
   public void shouldWriteFile() {
-    JsonParser parser = new JsonParser();
+    FileDAL parser = new FileDAL();
 
     JSONArray arr = new JSONArray();
     JSONObject aux = new JSONObject();
@@ -50,22 +41,10 @@ public class JsonParserTest {
     arr.put(aux);
 
 
-    try {
-      parser.writeFile("Course.json", arr);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+//    parser.writeFile("Course.json", arr);
 
     JSONArray res = null;
-    try {
-      res = parser.readFile("Course.json");
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+//    res = parser.readFile("Course.json");
 
     JSONObject actual = res.getJSONObject(res.length()-1);
     assertEquals(actual.get("description"), aux.get("description"));

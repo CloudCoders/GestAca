@@ -2,82 +2,59 @@ package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.logic.IStudentDAO;
 import com.cloudcoders.gestaca.model.Student;
+import com.cloudcoders.gestaca.persistance.dal.FileDAL;
+import com.cloudcoders.gestaca.persistance.dal.ReadFileException;
+import com.cloudcoders.gestaca.persistance.dal.WriteFileException;
+import com.cloudcoders.gestaca.persistance.parser.JsonParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class StudentDAOImpl implements IStudentDAO {
 
-  private JsonParser parser = new JsonParser();
+  private FileDAL fileDAL;
+  private JsonParser jsonParser;
+
+  public StudentDAOImpl(FileDAL fileDAL, JsonParser jsonParser) {
+    this.fileDAL = fileDAL;
+    this.jsonParser = jsonParser;
+  }
 
   @Override
   public Student get(String dni) {
-    List<Student> list = getAll();
-    int i = 0;
-    boolean found = false;
-    Student result = null;
-    while(i < list.size() && !found) {
-      found = dni.equals(list.get(i).getId()) ;
-      i++;
-    }
-    if(found)
-      result = list.get(--i);
-    return result;
+    Optional<Student> studentOp = getAll()
+        .stream()
+        .filter(it -> it.getId().equals(dni))
+        .findFirst();
+    return studentOp.isPresent()? studentOp.get() : null;
   }
 
   @Override
   public void add(Student student) {
-    JSONObject aux = new JSONObject();
-
-    aux.put("id",      student.getId());
-    aux.put("name",    student.getName());
-    aux.put("iban",    student.getIban());
-    aux.put("address", student.getAddress());
-    aux.put("zip",     student.getZip());
-    aux.put("enrollments", student.getEnrollments());
-
-    JSONArray a = null;
     try {
-      a = parser.readFile("Student.json");
-    } catch(IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+      List<Student> students = getAll();
 
-    int i = 0;
-    boolean found = false;
-    Student result = null;
-    while(i < a.length() && !found) {
-      String dni_obj = ((JSONObject)a.get(i)).getString("id");
-      found = student.getId().equals(dni_obj);
-      i++;
-    }
-    //TO-DO -> if(found) throw new PersistanceException.StudentAlreadyPresnent
-    a.put(aux);
-    try {
-      parser.writeFile("Student.json", a);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
+      Optional<Student> first = students.stream()
+          .filter(it -> it.getId().equals(student.getId()))
+          .findFirst();
+
+      if (!first.isPresent()) {
+        students.add(student);
+        String body = jsonParser.toJson(students);
+        fileDAL.writeFile("Student.json", body);
+      }
+    } catch (WriteFileException e) {
+      e.printStackTrace(); //TODO throw model exception
     }
   }
 
   @Override
   public Student remove(Student student) {
     JSONArray a = new JSONArray();
-    try {
-      a = parser.readFile("Student.json");
-    } catch(IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+//    a = fileDAL.readFile("Student.json");
 
     int i = 0;
     boolean found = false;
@@ -87,35 +64,20 @@ public class StudentDAOImpl implements IStudentDAO {
     }
     if(found) {
       a.remove(--i);
-      try {
-        parser.writeFile("Student.json", a);
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (URISyntaxException e) {
-        e.printStackTrace();
-      }
+//      fileDAL.writeFile("Student.json", a);
     }
     return student;
   }
 
   @Override
   public List<Student> getAll() {
-    List<Student> list =  new ArrayList<>();
-    JsonParser parser = new JsonParser();
     try {
-      JSONArray a = parser.readFile("Student.json");
-      for (Object o : a) {
-        JSONObject obj = (JSONObject) o;
-        Student st = new Student(obj.getInt("zip"), obj.getString("address"),
-                                 obj.getString("id"),obj.getString("name"),
-                                  obj.getString("iban"));//, obj.get("Enrollments"));
-        list.add(st);
-      }
-    } catch(IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
+      String json = fileDAL.readFile("Student.json");
+      List<Student> students = jsonParser.toObjectList(json, Student[].class);
+      return students;
+    } catch (ReadFileException e) {
       e.printStackTrace();
     }
-    return list;
+    return new ArrayList<>();
   }
 }

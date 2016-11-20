@@ -4,6 +4,7 @@ import com.cloudcoders.gestaca.model.Course;
 import com.cloudcoders.gestaca.model.Office;
 import com.cloudcoders.gestaca.model.TaughtCourse;
 import com.cloudcoders.gestaca.model.Teacher;
+import com.cloudcoders.gestaca.persistance.dal.FileDAL;
 import org.junit.Test;
 
 import java.util.Date;
@@ -16,7 +17,7 @@ public class TaughtCourseDAOImplTest {
 
   @Test
   public void should_add_taught_course() {
-    TaughtCourseDAOImpl taughtCourseDAO = new TaughtCourseDAOImpl(new JsonParser());
+    TaughtCourseDAOImpl taughtCourseDAO = new TaughtCourseDAOImpl(new FileDAL());
     Office office = new Office(1, "X", 0);
     Teacher teacher = new Teacher(1234, "Calle false", "1234", "Juan", "Prueba");
     Course course = new Course("Prueba", "Prueba", 0);

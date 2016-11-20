@@ -44,7 +44,7 @@ public class CommandLine implements View {
             } catch (NumberFormatException e) {
                 System.out.println("ERROR: Introduce un numero.");
             }
-        } while (choice < 0 || choice > courseList.size());
+        } while (choice < 0 || choice > courseList.size()-1);
         Course course = this.courseList.get(choice);
         return course;
     }

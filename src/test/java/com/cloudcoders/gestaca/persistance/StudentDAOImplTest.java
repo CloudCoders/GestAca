@@ -1,25 +1,30 @@
 package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.model.Student;
+import com.cloudcoders.gestaca.persistance.dal.FileDAL;
+import com.cloudcoders.gestaca.persistance.parser.JsonParser;
+import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
-
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class StudentDAOImplTest {
 
   @Test
   public void addStudent() {
     Student st = new Student(03725, "C/Dtr 2", "554564m", "Alsx asdas", "45454sf");
-    StudentDAOImpl dao = new StudentDAOImpl();
+    FileDAL fileDAL = new FileDAL();
+    JsonParser jsonParser = new JsonParser(new Gson());
+    StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
+
     dao.add(st);
     Student st2 = dao.get(st.getId());
     assertEquals(st.getName(), st2.getName());
@@ -38,7 +43,10 @@ public class StudentDAOImplTest {
     Student st2 = new Student(03725, "C/Dtr 2", "254554m", "Alsx asdas", "45454sf");
     Student st3 = new Student(02147, "C/Dtr 3", "388854m", "Alsx asdas", "45454sf");
 
-    StudentDAOImpl dao = new StudentDAOImpl();
+    FileDAL fileDAL = new FileDAL();
+    JsonParser jsonParser = new JsonParser(new Gson());
+    StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
+
     dao.add(st1);
     dao.add(st2);
     dao.add(st3);
@@ -77,7 +85,9 @@ public class StudentDAOImplTest {
   public void getAllStudents() {
     ArrayList<Student> students = precondiciones();
 
-    StudentDAOImpl dao = new StudentDAOImpl();
+    FileDAL fileDAL = new FileDAL();
+    JsonParser jsonParser = new JsonParser(new Gson());
+    StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
 
     Student st1c = dao.get(students.get(0).getId());
     Student st2c = dao.get(students.get(1).getId());
@@ -103,10 +113,6 @@ public class StudentDAOImplTest {
     assertEquals(students.get(2).getId(), st3c.getId());
     assertEquals(students.get(2).getAddress(), st3c.getAddress());
     assertEquals(students.get(2).getZip(), st3c.getZip());
-
-    dao.remove(st2c);
-    st2c = dao.get(st2c.getId());
-    assertNull(st2c);
   }
 
   public ArrayList<Student> precondiciones() {
@@ -120,7 +126,9 @@ public class StudentDAOImplTest {
     students.add(st2);
     students.add(st3);
 
-    StudentDAOImpl dao = new StudentDAOImpl();
+    FileDAL fileDAL = new FileDAL();
+    JsonParser jsonParser = new JsonParser(new Gson());
+    StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
     dao.add(st1);
     dao.add(st2);
     dao.add(st3);
