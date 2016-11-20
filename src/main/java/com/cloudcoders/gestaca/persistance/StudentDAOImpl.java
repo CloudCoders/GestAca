@@ -12,7 +12,7 @@ import java.util.List;
 
 public class StudentDAOImpl implements IStudentDAO {
 
-  private JsonParser parser = new JsonParser();
+  private FileDAL parser = new FileDAL();
 
   @Override
   public Student get(String dni) {
@@ -101,7 +101,7 @@ public class StudentDAOImpl implements IStudentDAO {
   @Override
   public List<Student> getAll() {
     List<Student> list =  new ArrayList<>();
-    JsonParser parser = new JsonParser();
+    FileDAL parser = new FileDAL();
     try {
       JSONArray a = parser.readFile("Student.json");
       for (Object o : a) {

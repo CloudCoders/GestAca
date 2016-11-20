@@ -9,11 +9,11 @@ import java.net.URISyntaxException;
 
 import static org.junit.Assert.*;
 
-public class JsonParserTest {
+public class FileDALTest {
 
   @Test
   public void shouldReadFile() {
-    JsonParser parser = new JsonParser();
+    FileDAL parser = new FileDAL();
     JSONArray resArr = null;
     JSONObject res = null;
 
@@ -40,7 +40,7 @@ public class JsonParserTest {
 
   @Test
   public void shouldWriteFile() {
-    JsonParser parser = new JsonParser();
+    FileDAL parser = new FileDAL();
 
     JSONArray arr = new JSONArray();
     JSONObject aux = new JSONObject();

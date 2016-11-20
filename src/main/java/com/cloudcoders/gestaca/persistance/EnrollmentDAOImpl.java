@@ -16,9 +16,9 @@ import java.util.List;
 
 public class EnrollmentDAOImpl implements IEnrollmentDAO {
 
-  private JsonParser parser;
+  private FileDAL parser;
 
-  public EnrollmentDAOImpl(JsonParser p) {
+  public EnrollmentDAOImpl(FileDAL p) {
     this.parser = p;
   }
 

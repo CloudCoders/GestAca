@@ -7,7 +7,7 @@ import com.cloudcoders.gestaca.logic.student.AddStudent;
 import com.cloudcoders.gestaca.logic.student.GetStudent;
 import com.cloudcoders.gestaca.persistance.CourseDAOImpl;
 import com.cloudcoders.gestaca.persistance.EnrollmentDAOImpl;
-import com.cloudcoders.gestaca.persistance.JsonParser;
+import com.cloudcoders.gestaca.persistance.FileDAL;
 import com.cloudcoders.gestaca.persistance.StudentDAOImpl;
 import com.cloudcoders.gestaca.persistance.TaughtCourseDAOImpl;
 import com.cloudcoders.gestaca.ui.CommandLine;
@@ -24,7 +24,7 @@ public class Application {
     CommandLine commandLine = new CommandLine(new Scanner(System.in));
     StudentDAOImpl iStudentDAO = new StudentDAOImpl();
     GetStudent getStudentUseCase = new GetStudent(iStudentDAO);
-    JsonParser parser = new JsonParser();
+    FileDAL parser = new FileDAL();
     CourseDAOImpl icourseDAO = new CourseDAOImpl(parser);
     GetAllCourses getAllCoursesUseCase = new GetAllCourses(icourseDAO);
     EnrollmentDAOImpl iEnrollmentDAO = new EnrollmentDAOImpl(parser);

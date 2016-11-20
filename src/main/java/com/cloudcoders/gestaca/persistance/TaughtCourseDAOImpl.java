@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,9 +14,9 @@ import java.util.List;
 
 public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
 
-  private JsonParser parser;
+  private FileDAL parser;
 
-  public TaughtCourseDAOImpl(JsonParser p) {
+  public TaughtCourseDAOImpl(FileDAL p) {
     this.parser = p;
   }
 

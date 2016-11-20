@@ -2,7 +2,6 @@ package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.logic.ICourseDAO;
 import com.cloudcoders.gestaca.model.Course;
-import com.cloudcoders.gestaca.model.TaughtCourse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,9 +13,9 @@ import java.util.List;
 
 public class CourseDAOImpl implements ICourseDAO{
 
-  private JsonParser parser;
+  private FileDAL parser;
 
-  public CourseDAOImpl(JsonParser parser) {
+  public CourseDAOImpl(FileDAL parser) {
     this.parser = parser;
   }
 
