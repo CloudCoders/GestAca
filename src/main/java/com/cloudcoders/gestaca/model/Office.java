@@ -9,14 +9,14 @@ public class Office {
   private long id;
   private List<TaughtCourse> taughtCourses;
 
-  public Office(int maxCapacity, String name, int id) {
+  public Office(int maxCapacity, String name, long id) {
     this.maxCapacity = maxCapacity;
     this.name = name;
     this.id = id;
     this.taughtCourses = new ArrayList<TaughtCourse>();
   }
 
-  public Office(int maxCapacity, String name, int id, List<TaughtCourse> taughtCourses) {
+  public Office(int maxCapacity, String name, long id, List<TaughtCourse> taughtCourses) {
     this.maxCapacity = maxCapacity;
     this.name = name;
     this.id = id;
