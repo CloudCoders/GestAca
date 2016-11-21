@@ -23,7 +23,7 @@ public class TaughtCourse {
                       int totalPrice,
                       String teachingday,
                       Date endDate,
-                      int id,
+                      long id,
                       Office office,
                       Teacher teacher,
                       Course course) {
@@ -46,7 +46,7 @@ public class TaughtCourse {
                       int totalPrice,
                       String teachingday,
                       Date endDate,
-                      int id,
+                      long id,
                       Office office,
                       Teacher teacher,
                       List<Enrollment> enrollments,

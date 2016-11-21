@@ -31,6 +31,7 @@ public class EnrollmentDAOImpl implements IEnrollmentDAO {
     try {
       json = fileDAL.readFile("Enrollment.json");
       List<Enrollment> enrollments = jsonParser.toObjectList(json, Enrollment[].class);
+      return enrollments;
     } catch (ReadFileException e) {
       e.printStackTrace(); //TODO throws model exception
     }
@@ -38,18 +39,18 @@ public class EnrollmentDAOImpl implements IEnrollmentDAO {
   }
 
   @Override
-  public void add(Enrollment enrollment) {
+  public void add(Enrollment newEnrollment) {
     int newId = (int) System.currentTimeMillis();
 
     try {
       List<Enrollment> enrollments = getAll();
 
-      Enrollment newEnrollment = new Enrollment(enrollment.getCancellationDate(),
-          enrollment.getEnrollemntDate(),
-          enrollment.isUniquePayment(),
-          newId, enrollment.getTaughtCourse(), enrollment.getStudent());
+      Enrollment enrollment = new Enrollment(newEnrollment.getCancellationDate(),
+          newEnrollment.getEnrollemntDate(),
+          newEnrollment.isUniquePayment(),
+          newId, newEnrollment.getTaughtCourse(), newEnrollment.getStudent());
 
-      enrollments.add(newEnrollment);
+      enrollments.add(enrollment);
       String enrollmentsJson = jsonParser.toJson(enrollments);
       fileDAL.writeFile("Enrollment.json", enrollmentsJson);
     } catch (WriteFileException e) {

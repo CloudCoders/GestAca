@@ -31,7 +31,7 @@ public class Application {
     CourseDAOImpl icourseDAO = new CourseDAOImpl(dal, jsonParser);
     GetAllCourses getAllCoursesUseCase = new GetAllCourses(icourseDAO);
     EnrollmentDAOImpl iEnrollmentDAO = new EnrollmentDAOImpl(dal, jsonParser);
-    AddEnrollment addEnrollment = new AddEnrollment(iEnrollmentDAO, new TaughtCourseDAOImpl(dal), iStudentDAO);
+    AddEnrollment addEnrollment = new AddEnrollment(iEnrollmentDAO, new TaughtCourseDAOImpl(dal, jsonParser), iStudentDAO);
     EnrollmentCommand enrollmentCommand = new EnrollmentCommand(commandLine, getStudentUseCase, getAllCoursesUseCase, addEnrollment, new AddStudent(iStudentDAO));
     AddCourse addCourse = new AddCourse(new CourseDAOImpl(dal, jsonParser));
     CreateCourseCommand createCommand = new CreateCourseCommand(commandLine, addCourse);
