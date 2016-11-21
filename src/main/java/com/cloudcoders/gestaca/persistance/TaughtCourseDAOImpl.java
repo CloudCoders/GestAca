@@ -6,6 +6,9 @@ import com.cloudcoders.gestaca.model.Office;
 import com.cloudcoders.gestaca.model.TaughtCourse;
 import com.cloudcoders.gestaca.model.Teacher;
 import com.cloudcoders.gestaca.persistance.dal.FileDAL;
+import com.cloudcoders.gestaca.persistance.dal.ReadFileException;
+import com.cloudcoders.gestaca.persistance.dal.WriteFileException;
+import com.cloudcoders.gestaca.persistance.parser.JsonParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,44 +19,46 @@ import java.util.List;
 
 public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
 
-  private FileDAL parser;
+  private FileDAL fileDAL;
+  private JsonParser parser;
 
-  public TaughtCourseDAOImpl(FileDAL p) {
-    this.parser = p;
+  public TaughtCourseDAOImpl(FileDAL fileDAL, JsonParser parser) {
+    this.fileDAL = fileDAL;
+    this.parser = parser;
   }
 
   @Override
-  public void add(TaughtCourse taughtCourse) {
-    JSONObject aux = new JSONObject();
-    aux.put("quota", taughtCourse.getQuota());
-    aux.put("sessionDuration", taughtCourse.getSessionDuration());
-    aux.put("startDate", taughtCourse.getStartDate().getTime());
-    aux.put("totalPrice", taughtCourse.getTotalPrice());
-    aux.put("teachingday", taughtCourse.getTeachingday());
-    aux.put("endDate", taughtCourse.getEndDate().getTime());
-    int newId = (int) System.currentTimeMillis();
-    aux.put("id", newId);
-    aux.put("office", taughtCourse.getOffice());
-    aux.put("teacher", taughtCourse.getTeacher());
-    aux.put("course", taughtCourse.getCourse());
-    aux.put("enrollments", taughtCourse.getEnrollments());
+  public void add(TaughtCourse newTaughtCourse) {
+    long newId = System.currentTimeMillis();
 
-    JSONArray jsonArray = null;
+    try {
+      List<TaughtCourse> taughtCourses = getAll();
 
-//    jsonArray = parser.readFile("TaughtCourse.json");
+      boolean isUnique = !taughtCourses.stream()
+          .filter(it -> it.getId() == newId)
+          .findFirst()
+          .isPresent();
 
-    boolean idIsUnique = true;
-    for (Iterator<Object> iterator = jsonArray.iterator(); iterator.hasNext() && idIsUnique; ) {
-      Object o = iterator.next();
-      JSONObject jsonObject = (JSONObject) o;
-      if (((int) jsonObject.get("id")) == taughtCourse.getId()) {
-        idIsUnique = false;
+      if(isUnique) {
+        TaughtCourse taughtCourse = new TaughtCourse(
+            newTaughtCourse.getQuota(),
+            newTaughtCourse.getSessionDuration(),
+            newTaughtCourse.getStartDate(),
+            newTaughtCourse.getTotalPrice(),
+            newTaughtCourse.getTeachingday(),
+            newTaughtCourse.getEndDate(),
+            newId,
+            newTaughtCourse.getOffice(),
+            newTaughtCourse.getTeacher(),
+            newTaughtCourse.getEnrollments(),
+            newTaughtCourse.getCourse());
+
+        taughtCourses.add(taughtCourse);
+        String taughtCoursesJson = parser.toJson(taughtCourses);
+        fileDAL.writeFile("TaughtCourse.json", taughtCoursesJson);
       }
-    }
-
-    if(idIsUnique) {
-      jsonArray.put(aux);
-//      parser.writeFile("TaughtCourse.json", jsonArray);
+    } catch (WriteFileException e) {
+      e.printStackTrace(); //TODO throw model exceptions
     }
 
   }
@@ -70,38 +75,14 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
 
   @Override
   public List<TaughtCourse> getAll() {
-    List<TaughtCourse> taughtCourses = new ArrayList<>();
-    JSONArray jsonArray = null;
-
-//    jsonArray = parser.readFile("TaughtCourse.json");
-
-    for(Object o : jsonArray) {
-      JSONObject jsonObject = (JSONObject) o;
-      int quota = (int) jsonObject.get("quota");
-      int sessionDuration = (int) jsonObject.get("sessionDuration");
-      Date startDate = new Date((long) jsonObject.get("startDate"));
-      int totalPrice = (int) jsonObject.get("totalPrice");
-      String teachingday = (String) jsonObject.get("teachingday");
-      Date endDate = new Date((long) jsonObject.get("endDate"));
-      int id = (int) jsonObject.get("id");
-      Office office = (Office) jsonObject.get("office");
-      Teacher teacher = (Teacher) jsonObject.get("teacher");
-      Course course = (Course) jsonObject.get("course");
-
-      TaughtCourse aux = new TaughtCourse(quota,
-            sessionDuration,
-            startDate,
-            totalPrice,
-            teachingday,
-            endDate,
-            id,
-            office,
-            teacher,
-            course);
-
-      taughtCourses.add(aux);
+    try {
+      String json = fileDAL.readFile("TaughtCourse.json");
+      List<TaughtCourse> taughtCourses = parser.toObjectList(json, TaughtCourse[].class);
+      return taughtCourses;
+    } catch (ReadFileException e) {
+      e.printStackTrace(); //TODO throw model exceptions
     }
-    return taughtCourses;
+    return new ArrayList<>();
   }
 }
 

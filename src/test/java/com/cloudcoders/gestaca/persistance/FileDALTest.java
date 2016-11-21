@@ -1,56 +1,49 @@
 package com.cloudcoders.gestaca.persistance;
 
+import com.cloudcoders.gestaca.model.Course;
 import com.cloudcoders.gestaca.persistance.dal.FileDAL;
+import com.cloudcoders.gestaca.persistance.dal.ReadFileException;
+import com.cloudcoders.gestaca.persistance.dal.WriteFileException;
+import com.cloudcoders.gestaca.persistance.parser.JsonParser;
+import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class FileDALTest {
 
-  @Test
-  public void shouldReadFile() {
-    FileDAL parser = new FileDAL();
-    JSONArray resArr = null;
-    JSONObject res = null;
+  private FileDAL fileDAL;
+  private JsonParser jsonParser;
 
-    JSONObject aux = new JSONObject();
-    aux.put("description", "Prueba1");
-    aux.put("name", "Prueba1");
-    aux.put("id", 1);
-
-//    resArr = parser.readFile("Course.json");
-
-    assertEquals(res.get("description"), aux.get("description"));
-    assertEquals(res.get("name"), aux.get("name"));
-    assertEquals(res.get("id"), aux.get("id"));
-
-
+  @Before
+  public void setup() {
+    this.fileDAL = new FileDAL();
+    this.jsonParser = new JsonParser(new Gson());
   }
 
   @Test
-  public void shouldWriteFile() {
-    FileDAL parser = new FileDAL();
+  public void should_write_and_read_file() {
+    String body = jsonParser.toJson(new Course("Prueba", "Prueba", 0));
 
-    JSONArray arr = new JSONArray();
-    JSONObject aux = new JSONObject();
-    aux.put("description", "Prueba1");
-    aux.put("name", "Prueba1");
-    aux.put("id", 1);
-    arr.put(aux);
+    try {
+      fileDAL.writeFile("Course.json", body);
+    } catch (WriteFileException e) {
+      e.printStackTrace();
+    }
 
+    String result = null;
+    try {
+      result = fileDAL.readFile("Course.json");
+    } catch (ReadFileException e) {
+      e.printStackTrace();
+    }
 
-//    parser.writeFile("Course.json", arr);
-
-    JSONArray res = null;
-//    res = parser.readFile("Course.json");
-
-    JSONObject actual = res.getJSONObject(res.length()-1);
-    assertEquals(actual.get("description"), aux.get("description"));
-    assertEquals(actual.get("name"), aux.get("name"));
-    assertEquals(actual.get("id"), aux.get("id"));
-
+    assertThat(body, is(result));
   }
 
 }
