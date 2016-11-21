@@ -39,10 +39,17 @@ public class CourseDAOImplTest {
     Course course = new Course("Test", "Course_Test", 0);
     CourseDAOImpl courseDAO = new CourseDAOImpl(fileDAL, jsonParser);
 
-    int prevLength = courseDAO.getAll().size();
-    courseDAO.add(course);
-    int postLength = courseDAO.getAll().size();
-    Course res = courseDAO.getAll().get(postLength-1);
+    int prevLength = 0;
+    int postLength = 0;
+    Course res = null;
+    try {
+      prevLength = courseDAO.getAll().size();
+      courseDAO.add(course);
+      postLength = courseDAO.getAll().size();
+      res = courseDAO.getAll().get(postLength-1);
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
 
     assertThat(prevLength, is(postLength-1));
     assertThat(course.getName(), is(res.getName()));
@@ -56,8 +63,14 @@ public class CourseDAOImplTest {
     JsonParser jsonParser = new JsonParser(new Gson());
     CourseDAOImpl courseDAO = new CourseDAOImpl(fileDAL, jsonParser);
     Course expected = new Course("Test", "Course_Test", 0);
-    courseDAO.add(expected);
-    Course actual = courseDAO.get("Course_Test");
+
+    Course actual = null;
+    try {
+      courseDAO.add(expected);
+      actual = courseDAO.get("Course_Test");
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
 
     assertEquals(actual.getName(), expected.getName());
     assertEquals(actual.getDescription(), expected.getDescription());

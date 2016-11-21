@@ -26,35 +26,43 @@ public class EnrollmentDAOImpl implements IEnrollmentDAO {
   }
 
   @Override
-  public List<Enrollment> getAll() {
+  public List<Enrollment> getAll() throws PersistenceException {
     String json = null;
     try {
       json = fileDAL.readFile("Enrollment.json");
       List<Enrollment> enrollments = jsonParser.toObjectList(json, Enrollment[].class);
       return enrollments;
     } catch (ReadFileException e) {
-      e.printStackTrace(); //TODO throws model exception
+      throw new PersistenceException(e.getMessage());
     }
-    return new ArrayList<>();
   }
 
   @Override
-  public void add(Enrollment newEnrollment) {
-    int newId = (int) System.currentTimeMillis();
+  public void add(Enrollment newEnrollment) throws PersistenceException {
+    long newId = System.currentTimeMillis();
 
     try {
       List<Enrollment> enrollments = getAll();
 
-      Enrollment enrollment = new Enrollment(newEnrollment.getCancellationDate(),
-          newEnrollment.getEnrollemntDate(),
-          newEnrollment.isUniquePayment(),
-          newId, newEnrollment.getTaughtCourse(), newEnrollment.getStudent());
+      boolean isUnique = !enrollments.stream()
+          .filter(it -> it.getId() == newId)
+          .findFirst()
+          .isPresent();
 
-      enrollments.add(enrollment);
-      String enrollmentsJson = jsonParser.toJson(enrollments);
-      fileDAL.writeFile("Enrollment.json", enrollmentsJson);
-    } catch (WriteFileException e) {
-      e.printStackTrace(); //TODO throws model exception
+      if(isUnique) {
+        Enrollment enrollment = new Enrollment(newEnrollment.getCancellationDate(),
+            newEnrollment.getEnrollemntDate(),
+            newEnrollment.isUniquePayment(),
+            newId, newEnrollment.getTaughtCourse(), newEnrollment.getStudent());
+
+        enrollments.add(enrollment);
+        String enrollmentsJson = jsonParser.toJson(enrollments);
+        fileDAL.writeFile("Enrollment.json", enrollmentsJson);
+      } else {
+        throw new PersistenceException("Id is not unique");
+      }
+    } catch (WriteFileException | PersistenceException e) {
+      throw new PersistenceException(e.getMessage());
     }
   }
 

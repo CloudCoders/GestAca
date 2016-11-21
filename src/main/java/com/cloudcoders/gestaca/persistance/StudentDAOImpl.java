@@ -24,30 +24,39 @@ public class StudentDAOImpl implements IStudentDAO {
   }
 
   @Override
-  public Student get(String dni) {
-    Optional<Student> studentOp = getAll()
-        .stream()
-        .filter(it -> it.getId().equals(dni))
-        .findFirst();
-    return studentOp.isPresent()? studentOp.get() : null;
+  public Student get(String dni) throws PersistenceException {
+    try {
+
+      Optional<Student> studentOp = getAll()
+          .stream()
+          .filter(it -> it.getId().equals(dni))
+          .findFirst();
+      return studentOp.isPresent()? studentOp.get() : null;
+
+    } catch (PersistenceException e) {
+      throw e;
+    }
   }
 
   @Override
-  public void add(Student student) {
+  public void add(Student student) throws PersistenceException {
     try {
       List<Student> students = getAll();
 
-      Optional<Student> first = students.stream()
+      boolean isUnique = !students.stream()
           .filter(it -> it.getId().equals(student.getId()))
-          .findFirst();
+          .findFirst()
+          .isPresent();
 
-      if (!first.isPresent()) {
+      if (isUnique) {
         students.add(student);
         String body = jsonParser.toJson(students);
         fileDAL.writeFile("Student.json", body);
+      } else {
+        throw new PersistenceException("Id is not unique");
       }
-    } catch (WriteFileException e) {
-      e.printStackTrace(); //TODO throw model exception
+    } catch (WriteFileException | PersistenceException e) {
+      throw new PersistenceException(e.getMessage());
     }
   }
 
@@ -70,14 +79,13 @@ public class StudentDAOImpl implements IStudentDAO {
   }
 
   @Override
-  public List<Student> getAll() {
+  public List<Student> getAll() throws PersistenceException {
     try {
       String json = fileDAL.readFile("Student.json");
       List<Student> students = jsonParser.toObjectList(json, Student[].class);
       return students;
     } catch (ReadFileException e) {
-      e.printStackTrace();
+      throw new PersistenceException(e.getMessage());
     }
-    return new ArrayList<>();
   }
 }

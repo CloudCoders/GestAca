@@ -2,6 +2,7 @@ package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.model.Student;
 import com.cloudcoders.gestaca.persistance.dal.FileDAL;
+import com.cloudcoders.gestaca.persistance.dal.WriteFileException;
 import com.cloudcoders.gestaca.persistance.parser.JsonParser;
 import com.google.gson.Gson;
 import org.junit.Before;
@@ -12,21 +13,42 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class StudentDAOImplTest {
 
+  private FileDAL fileDAL;
+  private JsonParser jsonParser;
+
+  @Before
+  public void setup() {
+    this.fileDAL = new FileDAL();
+    this.jsonParser = new JsonParser(new Gson());
+    List<Student> students = new ArrayList<>();
+    String result = jsonParser.toJson(students);
+    try {
+      fileDAL.writeFile("Student.json", result);
+    } catch (WriteFileException e) {
+      e.printStackTrace();
+    }
+  }
+
   @Test
   public void addStudent() {
     Student st = new Student(03725, "C/Dtr 2", "554564m", "Alsx asdas", "45454sf");
-    FileDAL fileDAL = new FileDAL();
-    JsonParser jsonParser = new JsonParser(new Gson());
     StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
 
-    dao.add(st);
-    Student st2 = dao.get(st.getId());
+    Student st2 = null;
+    try {
+      dao.add(st);
+      st2 = dao.get(st.getId());
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
+
     assertEquals(st.getName(), st2.getName());
     assertEquals(st.getIban(), st2.getIban());
     assertEquals(st.getEnrollments(), st2.getEnrollments());
@@ -43,17 +65,19 @@ public class StudentDAOImplTest {
     Student st2 = new Student(03725, "C/Dtr 2", "254554m", "Alsx asdas", "45454sf");
     Student st3 = new Student(02147, "C/Dtr 3", "388854m", "Alsx asdas", "45454sf");
 
-    FileDAL fileDAL = new FileDAL();
-    JsonParser jsonParser = new JsonParser(new Gson());
     StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
 
-    dao.add(st1);
-    dao.add(st2);
-    dao.add(st3);
-
-    Student st1c = dao.get(st1.getId());
-    Student st2c = dao.get(st2.getId());
-    Student st3c = dao.get(st3.getId());
+    Student st1c = null, st2c = null, st3c = null;
+    try {
+      dao.add(st1);
+      dao.add(st2);
+      dao.add(st3);
+      st1c = dao.get(st1.getId());
+      st2c = dao.get(st2.getId());
+      st3c = dao.get(st3.getId());
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
 
     assertEquals(st1.getName(), st1c.getName());
     assertEquals(st1.getIban(), st1c.getIban());
@@ -77,7 +101,11 @@ public class StudentDAOImplTest {
     assertEquals(st3.getZip(), st3c.getZip());
 
     dao.remove(st2);
-    st2 = dao.get(st2.getId());
+    try {
+      st2 = dao.get(st2.getId());
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
     assertNull(st2);
   }
 
@@ -89,9 +117,14 @@ public class StudentDAOImplTest {
     JsonParser jsonParser = new JsonParser(new Gson());
     StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
 
-    Student st1c = dao.get(students.get(0).getId());
-    Student st2c = dao.get(students.get(1).getId());
-    Student st3c = dao.get(students.get(2).getId());
+    Student st1c = null, st2c = null, st3c = null;
+    try {
+      st1c = dao.get(students.get(0).getId());
+      st2c = dao.get(students.get(1).getId());
+      st3c = dao.get(students.get(2).getId());
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
 
     assertEquals(students.get(0).getName(), st1c.getName());
     assertEquals(students.get(0).getIban(), st1c.getIban());
@@ -129,27 +162,14 @@ public class StudentDAOImplTest {
     FileDAL fileDAL = new FileDAL();
     JsonParser jsonParser = new JsonParser(new Gson());
     StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
-    dao.add(st1);
-    dao.add(st2);
-    dao.add(st3);
+    try {
+      dao.add(st1);
+      dao.add(st2);
+      dao.add(st3);
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
     return students;
   }
 
-  @Before
-  public void setup() {
-    ClassLoader loader = getClass().getClassLoader();
-    File file = null;
-    try {
-      file = new File(loader.getResource("Student.json").toURI());
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
-    try {
-      FileWriter fw = new FileWriter(file, false);
-      fw.write("[]".toCharArray());
-      fw.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
 }

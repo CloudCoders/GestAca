@@ -9,6 +9,7 @@ import com.cloudcoders.gestaca.persistance.parser.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class CourseDAOImpl implements ICourseDAO {
 
@@ -21,30 +22,33 @@ public class CourseDAOImpl implements ICourseDAO {
   }
 
   @Override
-  public Course get(String name) {
-    Course res;
-    res = getAll().stream()
-        .filter(course -> course.getName().equals(name))
-        .findFirst()
-        .get();
+  public Course get(String name) throws PersistenceException {
+    try {
 
-    return res;
+      Optional<Course> res = getAll()
+          .stream()
+          .filter(course -> course.getName().equals(name))
+          .findFirst();
+      return res.isPresent() ? res.get() : null;
+
+    } catch (PersistenceException e) {
+      throw e;
+    }
   }
 
   @Override
-  public List<Course> getAll() {
+  public List<Course> getAll() throws PersistenceException {
     try {
       String json = fileDAL.readFile("Course.json");
       List<Course> courses = parser.toObjectList(json, Course[].class);
       return courses;
     } catch (ReadFileException e) {
-      e.printStackTrace(); //TODO throw model exceptions
+      throw new PersistenceException(e.getMessage());
     }
-    return new ArrayList<>();
   }
 
   @Override
-  public void add(Course newCourse) {
+  public void add(Course newCourse) throws PersistenceException {
     long newId = System.currentTimeMillis();
 
     try {
@@ -61,9 +65,11 @@ public class CourseDAOImpl implements ICourseDAO {
         courses.add(course);
         String coursesJson = parser.toJson(courses);
         fileDAL.writeFile("Course.json", coursesJson);
+      } else {
+        throw new PersistenceException("Id is not unique");
       }
-    } catch (WriteFileException e) {
-      e.printStackTrace(); //TODO throw model exceptions
+    } catch (WriteFileException | PersistenceException e) {
+      throw new PersistenceException(e.getMessage());
     }
 
   }
