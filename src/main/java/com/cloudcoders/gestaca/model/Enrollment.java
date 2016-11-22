@@ -10,13 +10,13 @@ public class Enrollment {
   private boolean uniquePayment;
   private List<Absence> absences;
   private TaughtCourse taughtCourse;
-  private int id;
+  private long id;
   private Student student;
 
   public Enrollment(Date cancellationDate,
                     Date enrollemntDate,
                     boolean uniquePayment,
-                    int id,
+                    long id,
                     TaughtCourse taughtCourse,
                     Student student) {
     this.cancellationDate = cancellationDate;
@@ -31,7 +31,7 @@ public class Enrollment {
   public Enrollment(Date cancellationDate,
                     Date enrollemntDate,
                     boolean uniquePayment,
-                    int id, List<Absence> absences,
+                    long id, List<Absence> absences,
                     TaughtCourse taughtCourse,
                     Student student) {
     this.cancellationDate = cancellationDate;
@@ -67,7 +67,7 @@ public class Enrollment {
     return uniquePayment;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 

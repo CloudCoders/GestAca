@@ -11,7 +11,7 @@ public class TaughtCourse {
   private int totalPrice;
   private String teachingday;
   private Date endDate;
-  private int id;
+  private long id;
   private Office office;
   private Teacher teacher;
   private List<Enrollment> enrollments;
@@ -23,7 +23,7 @@ public class TaughtCourse {
                       int totalPrice,
                       String teachingday,
                       Date endDate,
-                      int id,
+                      long id,
                       Office office,
                       Teacher teacher,
                       Course course) {
@@ -46,7 +46,7 @@ public class TaughtCourse {
                       int totalPrice,
                       String teachingday,
                       Date endDate,
-                      int id,
+                      long id,
                       Office office,
                       Teacher teacher,
                       List<Enrollment> enrollments,
@@ -97,7 +97,7 @@ public class TaughtCourse {
     return endDate;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 
