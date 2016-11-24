@@ -1,6 +1,7 @@
 package com.cloudcoders.gestaca.logic.taughtcourse;
 
 import com.cloudcoders.gestaca.logic.ITaughtCourseDAO;
+import com.cloudcoders.gestaca.persistance.PersistenceException;
 
 public class GetAllTaughtCourses {
   private ITaughtCourseDAO iTaughtCourseDAO;
@@ -9,6 +10,10 @@ public class GetAllTaughtCourses {
     this.iTaughtCourseDAO = iTaughtCourseDAO;
   }
   public void getAll() {
-    iTaughtCourseDAO.getAll();
+    try {
+      iTaughtCourseDAO.getAll();
+    } catch (PersistenceException e) {
+      e.printStackTrace(); //TODO handle exception properly
+    }
   }
 }

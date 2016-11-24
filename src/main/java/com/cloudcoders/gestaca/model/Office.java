@@ -6,17 +6,17 @@ import java.util.List;
 public class Office {
   private int maxCapacity;
   private String name;
-  private int id;
+  private long id;
   private List<TaughtCourse> taughtCourses;
 
-  public Office(int maxCapacity, String name, int id) {
+  public Office(int maxCapacity, String name, long id) {
     this.maxCapacity = maxCapacity;
     this.name = name;
     this.id = id;
     this.taughtCourses = new ArrayList<TaughtCourse>();
   }
 
-  public Office(int maxCapacity, String name, int id, List<TaughtCourse> taughtCourses) {
+  public Office(int maxCapacity, String name, long id, List<TaughtCourse> taughtCourses) {
     this.maxCapacity = maxCapacity;
     this.name = name;
     this.id = id;
@@ -40,7 +40,7 @@ public class Office {
     return name;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 

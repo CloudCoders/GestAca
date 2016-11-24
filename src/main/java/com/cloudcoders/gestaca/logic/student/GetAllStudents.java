@@ -2,6 +2,7 @@ package com.cloudcoders.gestaca.logic.student;
 
 import com.cloudcoders.gestaca.logic.IStudentDAO;
 import com.cloudcoders.gestaca.model.Student;
+import com.cloudcoders.gestaca.persistance.PersistenceException;
 
 import java.util.List;
 
@@ -14,6 +15,11 @@ public class GetAllStudents {
   }
 
   public List<Student> getStudents() {
-    return iStudentDAO.getAll();
+    try {
+      return iStudentDAO.getAll();
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+      return null; //TODO handle exception properly
+    }
   }
 }

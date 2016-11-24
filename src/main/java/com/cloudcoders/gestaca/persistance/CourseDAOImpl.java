@@ -2,126 +2,74 @@ package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.logic.ICourseDAO;
 import com.cloudcoders.gestaca.model.Course;
-import com.cloudcoders.gestaca.model.TaughtCourse;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.cloudcoders.gestaca.persistance.dal.FileDAL;
+import com.cloudcoders.gestaca.persistance.dal.ReadFileException;
+import com.cloudcoders.gestaca.persistance.dal.WriteFileException;
+import com.cloudcoders.gestaca.persistance.parser.JsonParser;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
-public class CourseDAOImpl implements ICourseDAO{
+public class CourseDAOImpl implements ICourseDAO {
 
-  private JsonParser parser = new JsonParser();
+  private final JsonParser parser;
+  private final FileDAL fileDAL;
 
-  @Override
-  public Course get(String name) {
-    List<Course> courses = new ArrayList<>();
-    JSONArray jsonArray = null;
-
-    try {
-      jsonArray = parser.readFile("Course.json");
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    Course res;
-    for (Object o : jsonArray) {
-      JSONObject aux = (JSONObject) o;
-      if (aux.get("name") == name) {
-        if (aux.get("taughtCourses") != null) {
-          res = new Course(
-              (String) aux.get("description"),
-              (String) aux.get("name"),
-              (int) aux.get("id"),
-              (List<TaughtCourse>) aux.get("taughtCourses"));
-        } else {
-          res = new Course(
-              (String) aux.get("description"),
-              (String) aux.get("name"),
-              (int) aux.get("id"));
-        }
-        return res;
-      }
-    }
-
-    return null;
+  public CourseDAOImpl(FileDAL fileDAL, JsonParser jsonParser) {
+    this.fileDAL = fileDAL;
+    this.parser = jsonParser;
   }
 
   @Override
-  public List<Course> getAll() {
-    List<Course> courses = new ArrayList<>();
-    JSONArray jsonArray = null;
+  public Course get(String name) throws PersistenceException {
+    try {
+
+      Optional<Course> res = getAll()
+          .stream()
+          .filter(course -> course.getName().equals(name))
+          .findFirst();
+      return res.isPresent() ? res.get() : null;
+
+    } catch (PersistenceException e) {
+      throw e;
+    }
+  }
+
+  @Override
+  public List<Course> getAll() throws PersistenceException {
+    try {
+      String json = fileDAL.readFile("Course.json");
+      List<Course> courses = parser.toObjectList(json, Course[].class);
+      return courses;
+    } catch (ReadFileException e) {
+      throw new PersistenceException(e.getMessage());
+    }
+  }
+
+  @Override
+  public void add(Course newCourse) throws PersistenceException {
+    long newId = System.currentTimeMillis();
 
     try {
-       jsonArray = parser.readFile("Course.json");
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+      List<Course> courses = getAll();
 
-    for(Object o : jsonArray) {
-      JSONObject jsonObject = (JSONObject) o;
-      String description = (String) jsonObject.get("description");
-      String name = (String) jsonObject.get("name");
-      int id = (int) jsonObject.get("id");
-      List<TaughtCourse> taughtCourses = (List<TaughtCourse>) jsonObject.get("taughtCourses");
+      boolean isUnique = !courses.stream()
+          .filter(it -> it.getId() == newId)
+          .findFirst()
+          .isPresent();
 
-      Course aux;
-      if(taughtCourses != null) {
-        aux = new Course(description, name, id);
+      if (isUnique) {
+        Course course;
+        course = new Course(newCourse.getDescription(), newCourse.getName(), newId);
+        courses.add(course);
+        String coursesJson = parser.toJson(courses);
+        fileDAL.writeFile("Course.json", coursesJson);
       } else {
-        aux = new Course(description, name, id, taughtCourses);
+        throw new PersistenceException("Id is not unique");
       }
-
-      courses.add(aux);
-    }
-
-    return courses;
-  }
-
-  @Override
-  public void add(Course course) {
-    JSONObject aux = new JSONObject();
-    aux.put("description", course.getDescription());
-    aux.put("name", course.getName());
-    int newId = (int) System.currentTimeMillis();
-    aux.put("id", newId);
-    aux.put("taughtCourses", course.getTaughtCourses());
-
-    JSONArray jsonArray = null;
-
-    try {
-      jsonArray = parser.readFile("Course.json");
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
-
-    boolean idIsUnique = true;
-    for (Iterator<Object> iterator = jsonArray.iterator(); iterator.hasNext() && idIsUnique; ) {
-      Object o = iterator.next();
-      JSONObject jsonObject = (JSONObject) o;
-      if (((int) jsonObject.get("id")) == course.getId()) {
-        idIsUnique = false;
-      }
-    }
-
-    if (idIsUnique) {
-      jsonArray.put(aux);
-      try {
-        parser.writeFile("Course.json", jsonArray);
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (URISyntaxException e) {
-        e.printStackTrace();
-      }
+    } catch (WriteFileException | PersistenceException e) {
+      throw new PersistenceException(e.getMessage());
     }
 
   }

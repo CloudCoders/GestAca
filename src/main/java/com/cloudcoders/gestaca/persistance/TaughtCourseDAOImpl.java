@@ -1,12 +1,17 @@
 package com.cloudcoders.gestaca.persistance;
 
 import com.cloudcoders.gestaca.logic.ITaughtCourseDAO;
-import com.cloudcoders.gestaca.model.*;
+import com.cloudcoders.gestaca.model.Course;
+import com.cloudcoders.gestaca.model.Office;
+import com.cloudcoders.gestaca.model.TaughtCourse;
+import com.cloudcoders.gestaca.model.Teacher;
+import com.cloudcoders.gestaca.persistance.dal.FileDAL;
+import com.cloudcoders.gestaca.persistance.dal.ReadFileException;
+import com.cloudcoders.gestaca.persistance.dal.WriteFileException;
+import com.cloudcoders.gestaca.persistance.parser.JsonParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -14,56 +19,48 @@ import java.util.List;
 
 public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
 
+  private FileDAL fileDAL;
   private JsonParser parser;
 
-  public TaughtCourseDAOImpl(JsonParser p) {
-    this.parser = p;
+  public TaughtCourseDAOImpl(FileDAL fileDAL, JsonParser parser) {
+    this.fileDAL = fileDAL;
+    this.parser = parser;
   }
 
   @Override
-  public void add(TaughtCourse taughtCourse) {
-    JSONObject aux = new JSONObject();
-    aux.put("quota", taughtCourse.getQuota());
-    aux.put("sessionDuration", taughtCourse.getSessionDuration());
-    aux.put("startDate", taughtCourse.getStartDate());
-    aux.put("totalPrice", taughtCourse.getTotalPrice());
-    aux.put("teachingday", taughtCourse.getTeachingday());
-    aux.put("endDate", taughtCourse.getEndDate());
-    int newId = (int) System.currentTimeMillis();
-    aux.put("id", newId);
-    aux.put("office", taughtCourse.getOffice());
-    aux.put("teacher", taughtCourse.getTeacher());
-    aux.put("course", taughtCourse.getCourse());
-    aux.put("enrollments", taughtCourse.getEnrollments());
-
-    JSONArray jsonArray = null;
+  public void add(TaughtCourse newTaughtCourse) throws PersistenceException {
+    long newId = System.currentTimeMillis();
 
     try {
-      jsonArray = parser.readFile("TaughtCourse.json");
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+      List<TaughtCourse> taughtCourses = getAll();
 
-    boolean idIsUnique = true;
-    for (Iterator<Object> iterator = jsonArray.iterator(); iterator.hasNext() && idIsUnique; ) {
-      Object o = iterator.next();
-      JSONObject jsonObject = (JSONObject) o;
-      if (((int) jsonObject.get("id")) == taughtCourse.getId()) {
-        idIsUnique = false;
-      }
-    }
+      boolean isUnique = !taughtCourses.stream()
+          .filter(it -> it.getId() == newId)
+          .findFirst()
+          .isPresent();
 
-    if(idIsUnique) {
-      jsonArray.put(aux);
-      try {
-        parser.writeFile("TaughtCourse.json", jsonArray);
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (URISyntaxException e) {
-        e.printStackTrace();
+      if(isUnique) {
+        TaughtCourse taughtCourse = new TaughtCourse(
+            newTaughtCourse.getQuota(),
+            newTaughtCourse.getSessionDuration(),
+            newTaughtCourse.getStartDate(),
+            newTaughtCourse.getTotalPrice(),
+            newTaughtCourse.getTeachingday(),
+            newTaughtCourse.getEndDate(),
+            newId,
+            newTaughtCourse.getOffice(),
+            newTaughtCourse.getTeacher(),
+            newTaughtCourse.getEnrollments(),
+            newTaughtCourse.getCourse());
+
+        taughtCourses.add(taughtCourse);
+        String taughtCoursesJson = parser.toJson(taughtCourses);
+        fileDAL.writeFile("TaughtCourse.json", taughtCoursesJson);
+      } else {
+        throw new PersistenceException("Id is not unique");
       }
+    } catch (WriteFileException | PersistenceException e) {
+      throw new PersistenceException(e.getMessage());
     }
 
   }
@@ -74,66 +71,19 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
   }
 
   @Override
-  public TaughtCourse get(int id) {
+  public TaughtCourse get(long id) {
     return null;
   }
 
   @Override
-  public List<TaughtCourse> getAll() {
-    List<TaughtCourse> taughtCourses = new ArrayList<>();
-    JSONArray jsonArray = null;
-
+  public List<TaughtCourse> getAll() throws PersistenceException {
     try {
-      jsonArray = parser.readFile("TaughtCourse.json");
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
+      String json = fileDAL.readFile("TaughtCourse.json");
+      List<TaughtCourse> taughtCourses = parser.toObjectList(json, TaughtCourse[].class);
+      return taughtCourses;
+    } catch (ReadFileException e) {
+      throw new PersistenceException(e.getMessage());
     }
-
-    for(Object o : jsonArray) {
-      JSONObject jsonObject = (JSONObject) o;
-      int quota = (int) jsonObject.get("quota");
-      int sessionDuration = (int) jsonObject.get("sessionDuration");
-      Date startDate = (Date) jsonObject.get("startDate");
-      int totalPrice = (int) jsonObject.get("totalPrice");
-      String teachingday = (String) jsonObject.get("teachingday");
-      Date endDate = (Date) jsonObject.get("endDate");
-      int id = (int) jsonObject.get("id");
-      Office office = (Office) jsonObject.get("office");
-      Teacher teacher = (Teacher) jsonObject.get("teacher");
-      Course course = (Course) jsonObject.get("course");
-      List<Enrollment> enrollments = (List<Enrollment>) jsonObject.get("enrollments");
-
-      TaughtCourse aux;
-      if(taughtCourses != null) {
-        aux = new TaughtCourse(quota,
-            sessionDuration,
-            startDate,
-            totalPrice,
-            teachingday,
-            endDate,
-            id,
-            office,
-            teacher,
-            enrollments,
-            course);
-      } else {
-        aux = new TaughtCourse(quota,
-            sessionDuration,
-            startDate,
-            totalPrice,
-            teachingday,
-            endDate,
-            id,
-            office,
-            teacher,
-            course);
-      }
-
-      taughtCourses.add(aux);
-    }
-    return taughtCourses;
   }
 }
 
