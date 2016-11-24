@@ -7,169 +7,99 @@ import com.cloudcoders.gestaca.persistance.parser.JsonParser;
 import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class StudentDAOImplTest {
 
-  private FileDAL fileDAL;
-  private JsonParser jsonParser;
+  private static FileDAL DAL = new FileDAL();
+  private static JsonParser parser = new JsonParser(new Gson());
+  private static String EMPTY_FILE = "[]";
 
   @Before
   public void setup() {
-    this.fileDAL = new FileDAL();
-    this.jsonParser = new JsonParser(new Gson());
-    List<Student> students = new ArrayList<>();
-    String result = jsonParser.toJson(students);
+    //Cleans the Student.json File
     try {
-      fileDAL.writeFile("Student.json", result);
+      DAL.writeFile("Student.json", EMPTY_FILE);
     } catch (WriteFileException e) {
       e.printStackTrace();
     }
   }
 
-  @Test
-  public void addStudent() {
-    Student st = new Student(03725, "C/Dtr 2", "554564m", "Alsx asdas", "45454sf");
-    StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
-
-    Student st2 = null;
-    try {
-      dao.add(st);
-      st2 = dao.get(st.getId());
-    } catch (PersistenceException e) {
-      e.printStackTrace();
-    }
-
-    assertEquals(st.getName(), st2.getName());
-    assertEquals(st.getIban(), st2.getIban());
-    assertEquals(st.getEnrollments(), st2.getEnrollments());
-    assertEquals(st.getId(), st2.getId());
-    assertEquals(st.getAddress(), st2.getAddress());
-    assertEquals(st.getZip(), st2.getZip());
-  }
-
-  @Test
-  public void removeStudent() {
-    ArrayList<Student> students = new ArrayList<>();
-
-    Student st1 = new Student(03725, "C/Dtr 1", "154564m", "Alsx asdas", "45454sf");
-    Student st2 = new Student(03725, "C/Dtr 2", "254554m", "Alsx asdas", "45454sf");
-    Student st3 = new Student(02147, "C/Dtr 3", "388854m", "Alsx asdas", "45454sf");
-
-    StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
-
-    Student st1c = null, st2c = null, st3c = null;
-    try {
-      dao.add(st1);
-      dao.add(st2);
-      dao.add(st3);
-      st1c = dao.get(st1.getId());
-      st2c = dao.get(st2.getId());
-      st3c = dao.get(st3.getId());
-    } catch (PersistenceException e) {
-      e.printStackTrace();
-    }
-
-    assertEquals(st1.getName(), st1c.getName());
-    assertEquals(st1.getIban(), st1c.getIban());
-    assertEquals(st1.getEnrollments(), st1c.getEnrollments());
-    assertEquals(st1.getId(), st1c.getId());
-    assertEquals(st1.getAddress(), st1c.getAddress());
-    assertEquals(st1.getZip(), st1c.getZip());
-
-    assertEquals(st2.getName(), st2c.getName());
-    assertEquals(st2.getIban(), st2c.getIban());
-    assertEquals(st2.getEnrollments(), st2c.getEnrollments());
-    assertEquals(st2.getId(), st2c.getId());
-    assertEquals(st2.getAddress(), st2c.getAddress());
-    assertEquals(st2.getZip(), st2c.getZip());
-
-    assertEquals(st3.getName(), st3c.getName());
-    assertEquals(st3.getIban(), st3c.getIban());
-    assertEquals(st3.getEnrollments(), st3c.getEnrollments());
-    assertEquals(st3.getId(), st3c.getId());
-    assertEquals(st3.getAddress(), st3c.getAddress());
-    assertEquals(st3.getZip(), st3c.getZip());
-
-    dao.remove(st2);
-    try {
-      st2 = dao.get(st2.getId());
-    } catch (PersistenceException e) {
-      e.printStackTrace();
-    }
-    assertNull(st2);
-  }
-
-  @Test
-  public void getAllStudents() {
-    ArrayList<Student> students = precondiciones();
-
-    FileDAL fileDAL = new FileDAL();
-    JsonParser jsonParser = new JsonParser(new Gson());
-    StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
-
-    Student st1c = null, st2c = null, st3c = null;
-    try {
-      st1c = dao.get(students.get(0).getId());
-      st2c = dao.get(students.get(1).getId());
-      st3c = dao.get(students.get(2).getId());
-    } catch (PersistenceException e) {
-      e.printStackTrace();
-    }
-
-    assertEquals(students.get(0).getName(), st1c.getName());
-    assertEquals(students.get(0).getIban(), st1c.getIban());
-    assertEquals(students.get(0).getEnrollments(), st1c.getEnrollments());
-    assertEquals(students.get(0).getId(), st1c.getId());
-    assertEquals(students.get(0).getAddress(), st1c.getAddress());
-    assertEquals(students.get(0).getZip(), st1c.getZip());
-
-    assertEquals(students.get(1).getName(), st2c.getName());
-    assertEquals(students.get(1).getIban(), st2c.getIban());
-    assertEquals(students.get(1).getEnrollments(), st2c.getEnrollments());
-    assertEquals(students.get(1).getId(), st2c.getId());
-    assertEquals(students.get(1).getAddress(), st2c.getAddress());
-    assertEquals(students.get(1).getZip(), st2c.getZip());
-
-    assertEquals(students.get(2).getName(), st3c.getName());
-    assertEquals(students.get(2).getIban(), st3c.getIban());
-    assertEquals(students.get(2).getEnrollments(), st3c.getEnrollments());
-    assertEquals(students.get(2).getId(), st3c.getId());
-    assertEquals(students.get(2).getAddress(), st3c.getAddress());
-    assertEquals(students.get(2).getZip(), st3c.getZip());
-  }
-
-  public ArrayList<Student> precondiciones() {
+  public ArrayList<Student> initialize_students_file() throws PersistenceException {
 
     ArrayList<Student> students = new ArrayList<>();
-    Student st1 = new Student(03725, "C/Dtr 1", "154564m", "Alsx asdas", "45454sf");
-    Student st2 = new Student(03725, "C/Dtr 2", "254554m", "Alsx asdas", "45454sf");
-    Student st3 = new Student(02147, "C/Dtr 3", "388854m", "Alsx asdas", "45454sf");
+    Student st1 = new Student(46020, "C/Reverendo Blabla 25", "12345678x", "Liil Johny Doe", "600030156161154");
+    Student st2 = new Student(46021, "C/Turia 45", "78798797y", "John Doe", "600030156161153");
+    Student st3 = new Student(46022, "C/Colon 43", "54984594z", "Jane Doe", "600030156161152");
 
     students.add(st1);
     students.add(st2);
     students.add(st3);
 
+    StudentDAOImpl dao = new StudentDAOImpl(DAL, parser);
+    dao.add(st1);
+    dao.add(st2);
+    dao.add(st3);
+    return students;
+  }
+
+  @Test
+  public void should_add_student_and_return_it() throws PersistenceException {
+    Student st = new Student(03725, "C/Dtr 2", "554564m", "Alsx asdas", "45454sf");
     FileDAL fileDAL = new FileDAL();
     JsonParser jsonParser = new JsonParser(new Gson());
     StudentDAOImpl dao = new StudentDAOImpl(fileDAL, jsonParser);
-    try {
-      dao.add(st1);
-      dao.add(st2);
-      dao.add(st3);
-    } catch (PersistenceException e) {
-      e.printStackTrace();
-    }
-    return students;
+
+    dao.add(st);
+    Student st2 = dao.get(st.getId());
+    assertStudentEquals(st, st2);
+  }
+
+  @Test
+  public void should_remove_student_and_return_null() throws PersistenceException {
+    ArrayList<Student> students = initialize_students_file();
+    StudentDAOImpl dao = new StudentDAOImpl(DAL, parser);
+
+    Student st1copy = dao.get(students.get(0).getId());
+    Student st2copy = dao.get(students.get(1).getId());
+    Student st3copy = dao.get(students.get(2).getId());
+
+    assertStudentEquals(students.get(0), st1copy);
+    assertStudentEquals(students.get(1), st2copy);
+    assertStudentEquals(students.get(2), st3copy);
+
+    dao.remove(st2copy);
+    st2copy = dao.get(st2copy.getId());
+    assertNull(st2copy);
+  }
+
+  @Test
+  public void should_return_list_with_all_students() throws PersistenceException {
+    ArrayList<Student> students = initialize_students_file();
+
+    StudentDAOImpl dao = new StudentDAOImpl(DAL, parser);
+
+    Student st1copy = dao.get(students.get(0).getId());
+    Student st2copy = dao.get(students.get(1).getId());
+    Student st3copy = dao.get(students.get(2).getId());
+
+    assertStudentEquals(students.get(0), st1copy);
+    assertStudentEquals(students.get(1), st2copy);
+    assertStudentEquals(students.get(2), st3copy);
+  }
+
+
+  private void assertStudentEquals(Student st1, Student st2) {
+    assertEquals(st1.getName(), st2.getName());
+    assertEquals(st1.getIban(), st2.getIban());
+    assertEquals(st1.getEnrollments(), st2.getEnrollments());
+    assertEquals(st1.getId(), st2.getId());
+    assertEquals(st1.getAddress(), st2.getAddress());
+    assertEquals(st1.getZip(), st2.getZip());
+    assertEquals(st1.getEnrollments(), st2.getEnrollments());
   }
 
 }
