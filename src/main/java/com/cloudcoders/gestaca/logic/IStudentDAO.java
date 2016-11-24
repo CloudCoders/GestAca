@@ -11,7 +11,7 @@ public interface IStudentDAO {
 
   void add(Student student) throws PersistenceException;
 
-  Student remove(Student student);
+  Student remove(Student student) throws PersistenceException;
 
   List<Student> getAll() throws PersistenceException;
 }
