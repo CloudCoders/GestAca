@@ -53,10 +53,17 @@ public class EnrollmentDAOImplTest {
         student);
     EnrollmentDAOImpl enrollmentDAO = new EnrollmentDAOImpl(fileDAL, jsonParser);
 
-    int prevLength = enrollmentDAO.getAll().size();
-    enrollmentDAO.add(enrollment);
-    int postLength = enrollmentDAO.getAll().size();
-    Enrollment res = enrollmentDAO.getAll().get(postLength-1);
+    int prevLength = 0;
+    int postLength = 0;
+    Enrollment res = null;
+    try {
+      prevLength = enrollmentDAO.getAll().size();
+      enrollmentDAO.add(enrollment);
+      postLength = enrollmentDAO.getAll().size();
+      res = enrollmentDAO.getAll().get(postLength-1);
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
 
     assertThat(prevLength, is(postLength-1));
     assertThat(enrollment.getId(), is(not(res.getId())));

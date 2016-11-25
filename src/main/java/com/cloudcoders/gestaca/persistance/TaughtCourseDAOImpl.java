@@ -28,7 +28,7 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
   }
 
   @Override
-  public void add(TaughtCourse newTaughtCourse) {
+  public void add(TaughtCourse newTaughtCourse) throws PersistenceException {
     long newId = System.currentTimeMillis();
 
     try {
@@ -56,9 +56,11 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
         taughtCourses.add(taughtCourse);
         String taughtCoursesJson = parser.toJson(taughtCourses);
         fileDAL.writeFile("TaughtCourse.json", taughtCoursesJson);
+      } else {
+        throw new PersistenceException("Id is not unique");
       }
-    } catch (WriteFileException e) {
-      e.printStackTrace(); //TODO throw model exceptions
+    } catch (WriteFileException | PersistenceException e) {
+      throw new PersistenceException(e.getMessage());
     }
 
   }
@@ -74,15 +76,14 @@ public class TaughtCourseDAOImpl implements ITaughtCourseDAO {
   }
 
   @Override
-  public List<TaughtCourse> getAll() {
+  public List<TaughtCourse> getAll() throws PersistenceException {
     try {
       String json = fileDAL.readFile("TaughtCourse.json");
       List<TaughtCourse> taughtCourses = parser.toObjectList(json, TaughtCourse[].class);
       return taughtCourses;
     } catch (ReadFileException e) {
-      e.printStackTrace(); //TODO throw model exceptions
+      throw new PersistenceException(e.getMessage());
     }
-    return new ArrayList<>();
   }
 }
 

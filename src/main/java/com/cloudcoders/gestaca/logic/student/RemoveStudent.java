@@ -2,6 +2,7 @@ package com.cloudcoders.gestaca.logic.student;
 
 import com.cloudcoders.gestaca.logic.IStudentDAO;
 import com.cloudcoders.gestaca.model.Student;
+import com.cloudcoders.gestaca.persistance.PersistenceException;
 
 public class RemoveStudent {
   IStudentDAO iStudentDAO;
@@ -11,6 +12,11 @@ public class RemoveStudent {
   }
 
   public Student remove(Student student) {
-    return iStudentDAO.remove(student);
+    try {
+      return iStudentDAO.remove(student);
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }

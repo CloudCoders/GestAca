@@ -6,14 +6,12 @@ import com.cloudcoders.gestaca.persistance.dal.FileDAL;
 import com.cloudcoders.gestaca.persistance.dal.ReadFileException;
 import com.cloudcoders.gestaca.persistance.dal.WriteFileException;
 import com.cloudcoders.gestaca.persistance.parser.JsonParser;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class StudentDAOImpl implements IStudentDAO {
+
+  private static final String STUDENTS_FILE = "Student.json";
 
   private FileDAL fileDAL;
   private JsonParser jsonParser;
@@ -24,7 +22,7 @@ public class StudentDAOImpl implements IStudentDAO {
   }
 
   @Override
-  public Student get(String dni) {
+  public Student get(String dni) throws PersistenceException{
     Optional<Student> studentOp = getAll()
         .stream()
         .filter(it -> it.getId().equals(dni))
@@ -33,51 +31,57 @@ public class StudentDAOImpl implements IStudentDAO {
   }
 
   @Override
-  public void add(Student student) {
-    try {
-      List<Student> students = getAll();
+  public void add(Student student) throws PersistenceException {
+    List<Student> students = getAll();
 
-      Optional<Student> first = students.stream()
-          .filter(it -> it.getId().equals(student.getId()))
-          .findFirst();
+    Optional<Student> first = students.stream()
+        .filter(it -> it.getId().equals(student.getId()))
+        .findFirst();
 
-      if (!first.isPresent()) {
-        students.add(student);
-        String body = jsonParser.toJson(students);
-        fileDAL.writeFile("Student.json", body);
-      }
-    } catch (WriteFileException e) {
-      e.printStackTrace(); //TODO throw model exception
+    if (!first.isPresent()) {
+      students.add(student);
+      String body = jsonParser.toJson(students);
+      writeToFile(body);
     }
   }
 
   @Override
-  public Student remove(Student student) {
-    JSONArray a = new JSONArray();
-//    a = fileDAL.readFile("Student.json");
+  public Student remove(Student student) throws PersistenceException {
+      List<Student> students = getAll();
 
-    int i = 0;
-    boolean found = false;
-    while(i < a.length() && !found) {
-      found = student.getId().equals(((JSONObject)a.get(i)).getString("id")) ;
-      i++;
-    }
-    if(found) {
-      a.remove(--i);
-//      fileDAL.writeFile("Student.json", a);
-    }
+      Optional<Student> first = students.stream()
+                                .filter(it -> it.getId().equals(student.getId()))
+                                .findFirst();
+      if(first.isPresent()) {
+        students.remove(first.get());
+        String body = jsonParser.toJson(students);
+        writeToFile(body);
+      }
     return student;
   }
 
   @Override
-  public List<Student> getAll() {
-    try {
-      String json = fileDAL.readFile("Student.json");
+  public List<Student> getAll() throws PersistenceException{
+      String json = readFromFile();
       List<Student> students = jsonParser.toObjectList(json, Student[].class);
       return students;
+  }
+
+  private String readFromFile() throws PersistenceException{
+    try{
+      return fileDAL.readFile(STUDENTS_FILE);
     } catch (ReadFileException e) {
-      e.printStackTrace();
+      throw new PersistenceException(e.getMessage());
     }
-    return new ArrayList<>();
+
+  }
+
+
+  private void writeToFile(String body) throws PersistenceException{
+    try {
+      fileDAL.writeFile(STUDENTS_FILE, body);
+    } catch (WriteFileException e) {
+      throw new PersistenceException(e.getMessage());
+    }
   }
 }

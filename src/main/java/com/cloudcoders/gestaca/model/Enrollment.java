@@ -16,7 +16,7 @@ public class Enrollment {
   public Enrollment(Date cancellationDate,
                     Date enrollemntDate,
                     boolean uniquePayment,
-                    int id,
+                    long id,
                     TaughtCourse taughtCourse,
                     Student student) {
     this.cancellationDate = cancellationDate;
@@ -31,7 +31,7 @@ public class Enrollment {
   public Enrollment(Date cancellationDate,
                     Date enrollemntDate,
                     boolean uniquePayment,
-                    int id, List<Absence> absences,
+                    long id, List<Absence> absences,
                     TaughtCourse taughtCourse,
                     Student student) {
     this.cancellationDate = cancellationDate;

@@ -31,7 +31,7 @@ public class TaughtCourseDAOImplTest {
     List<TaughtCourse> taughtCourses = new ArrayList<>();
     String result = jsonParser.toJson(taughtCourses);
     try {
-      fileDAL.writeFile("taughtCourse.json", result);
+      fileDAL.writeFile("TaughtCourse.json", result);
     } catch (WriteFileException e) {
       e.printStackTrace();
     }
@@ -45,11 +45,17 @@ public class TaughtCourseDAOImplTest {
     Course course = new Course("Prueba", "Prueba", 0);
     TaughtCourse result = new TaughtCourse(1, 1, new Date(), 1, "X", new Date(), 0, office, teacher, course);
 
-    int prevLength = taughtCourseDAO.getAll().size();
-    taughtCourseDAO.add(result);
-    int postLength = taughtCourseDAO.getAll().size();
-    TaughtCourse actual = taughtCourseDAO.getAll().get(postLength-1);
-
+    int prevLength = 0;
+    int postLength = 0;
+    TaughtCourse actual = null;
+    try {
+      prevLength = taughtCourseDAO.getAll().size();
+      taughtCourseDAO.add(result);
+      postLength = taughtCourseDAO.getAll().size();
+      actual = taughtCourseDAO.getAll().get(postLength-1);
+    } catch (PersistenceException e) {
+      e.printStackTrace();
+    }
 
     assertThat(prevLength, is(postLength-1));
     assertThat(actual.getQuota(), is(result.getQuota()));
